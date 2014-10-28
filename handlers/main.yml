@@ -1,0 +1,5 @@
+---
+# handlers file for plone.jenkins_node
+
+- name: restart fail2ban
+  service: name=fail2ban state=restarted
