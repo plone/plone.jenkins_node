@@ -53,6 +53,7 @@
         - imagemagick
         - firefox
         - ufw
+        - fail2ban
 
 # Make sure these are not installed
     apt: name={{item}} state=absent
@@ -177,3 +178,6 @@
     - name: Set UFW to allow port 4949 from munin master
       ufw: rule=allow src=162.209.104.107 proto=tcp port=4949
 
+    # fail2ban
+    - name: Upload fail2ban jail.local
+      copy: src=jail.local dest=/etc/fail2ban/jail.local mode=0644
