@@ -54,6 +54,7 @@
         - firefox
         - ufw
         - fail2ban
+        - unattended-upgrades
 
 # Make sure these are not installed
     apt: name={{item}} state=absent
@@ -182,3 +183,10 @@
     - name: Upload fail2ban jail.local
       copy: src=jail.local dest=/etc/fail2ban/jail.local mode=0644
       notify: restart fail2ban
+
+    # unattended-upgrades
+    - name: Configure unattended-upgrades auto-upgrades
+      copy: src=10periodic dest=/etc/apt/apt.conf.d/10periodic owner=root group=root mode=0644
+    - name: Upload unattended-upgrades configuration
+      copy: src=50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades owner=root group=root mode=0644
+      notify: restart unattended-upgrades
