@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Plone Foundation
-  description:Jenkins CI Node
+  description: Jenkins CI Node
   company: Plone Foundation
   license: license (GPLv2, CC-BY, etc)
   min_ansible_version: 1.7.2
