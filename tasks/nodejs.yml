@@ -1,0 +1,34 @@
+---
+
+- name: "node.js: fetch sources"
+  sudo: yes
+  get_url: url=http://nodejs.org/dist/node-latest.tar.gz dest=/tmp/
+
+- name: "node.js: Unpack tarball"
+  sudo: yes
+  command: tar zxf node-latest.tar.gz chdir=/tmp
+
+- name: "node.js: lookup directory name"
+  sudo: yes
+  shell: ls /tmp | grep node-v
+  register: node_dir
+
+- name: "node.js: configure"
+  sudo: yes
+  shell: ./configure --prefix=/usr/local chdir=/tmp/{{ node_dir.stdout }}
+
+- name: "node.js: make"
+  sudo: yes
+  shell: /usr/bin/make chdir=/tmp/{{ node_dir.stdout }}
+
+- name: "node.js: make install"
+  sudo: yes
+  shell: /usr/bin/make install chdir=/tmp/{{ node_dir.stdout }}
+
+- name: "Install NPM packages"
+  sudo: yes
+  npm: name={{item}} global=yes state=present
+  with_items:
+    - bower
+    - jshint
+    - csslint
