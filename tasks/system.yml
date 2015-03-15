@@ -1,0 +1,93 @@
+---
+
+- name: System update
+  sudo: yes
+  apt: upgrade=dist update_cache=yes
+
+- name: Install dependencies
+  sudo: yes
+  apt: name={{item}} state=present
+  with_items:
+    - build-essential
+    - htop
+    - curl
+    - openjdk-7-jre
+    - ntp
+    - python-software-properties
+    - git-core
+    - subversion
+    - libxml2-utils
+    - wv
+    - poppler-utils
+    - libbz2-dev
+    - ohcount
+    - sloccount
+    - python2.7
+    - python2.7-dev
+    - tmpreaper
+    - zlib1g-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - libjpeg-dev
+    - libjpeg8-dev
+    - python-lxml
+    - enscript
+    - libxslt1-dev
+    - libxml2-dev
+    - libxml2-utils
+    - libssl-dev
+    - libssl-doc
+    - xvfb
+    - x11-apps
+    - xfonts-100dpi
+    - xfonts-75dpi
+    - xfonts-scalable
+    - xfonts-cyrillic
+    - imagemagick
+    - firefox
+    - ufw
+    - fail2ban
+    - unattended-upgrades
+
+# Set Timezone to US/Pacific (default was: 'Etc/UTC')
+# XXX: Only a single test requires this in plone.app.form 2.2.x
+# https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
+- name: "Set timezone to US/Pacific"
+  sudo: yes
+  copy: content='US/Pacific' dest=/etc/timezone owner=root group=root mode=0644 backup=yes
+
+- name: "Update timezone"
+  sudo: yes
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+
+# UFW
+- name: Set UFW to deny all
+  sudo: yes
+  ufw: state=enabled policy=deny
+- name: Set UFW to allow OpenSSH
+  sudo: yes
+  ufw: rule=allow name=OpenSSH
+- name: Set UFW to allow Port 80
+  sudo: yes
+  ufw: rule=allow port=80 proto=tcp
+- name: Set UFW to allow Port 443
+  sudo: yes
+  ufw: rule=allow port=443 proto=tcp
+- name: Set UFW to allow port 4949 from munin master
+  sudo: yes
+  ufw: rule=allow src=162.209.104.107 proto=tcp port=4949
+
+# fail2ban
+- name: Upload fail2ban jail.local
+  sudo: yes
+  copy: src=jail.local dest=/etc/fail2ban/jail.local mode=0644
+  notify: restart fail2ban
+
+# unattended-upgrades
+- name: Configure unattended-upgrades auto-upgrades
+  sudo: yes
+  copy: src=10periodic dest=/etc/apt/apt.conf.d/10periodic owner=root group=root mode=0644
+- name: Upload unattended-upgrades configuration
+  sudo: yes
+  copy: src=50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades owner=root group=root mode=0644
+  notify: restart unattended-upgrades
