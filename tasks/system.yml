@@ -8,35 +8,48 @@
   sudo: yes
   apt: name={{item}} state=present
   with_items:
+    # Java is needed in order to connect the Jenkins slaves to the master
+    - openjdk-7-jre
+    # Basics
     - build-essential
     - htop
     - curl
-    - openjdk-7-jre
+    # Time
     - ntp
-    - python-software-properties
+    # VCS
     - git-core
     - subversion
-    - libxml2-utils
+    # Word support
     - wv
+    # PDF support
     - poppler-utils
+    # Extract pypi packages
     - libbz2-dev
+    # Code analysis
     - ohcount
     - sloccount
     - python2.7
     - python2.7-dev
+    - python3.4
+    - python3.4-dev
+    # Keep /tmp folder clean
     - tmpreaper
+    # Pillow dependencies
     - zlib1g-dev
     - libfreetype6
     - libfreetype6-dev
     - libjpeg-dev
     - libjpeg8-dev
-    - python-lxml
+    # Test coverage
     - enscript
+    # lxml dependencies
+    - python-lxml
     - libxslt1-dev
     - libxml2-dev
     - libxml2-utils
     - libssl-dev
     - libssl-doc
+    # Robot Framework dependencies
     - xvfb
     - x11-apps
     - xfonts-100dpi
@@ -48,6 +61,16 @@
     - ufw
     - fail2ban
     - unattended-upgrades
+
+- name: Remove packages
+  sudo: yes
+  apt: name={{item}} state=absent
+  with_items:
+    - python-software-properties
+    - python-apt
+    - python-imaging
+    - python-pil
+    - libjpeg62-dev
 
 # Set Timezone to US/Pacific (default was: 'Etc/UTC')
 # XXX: Only a single test requires this in plone.app.form 2.2.x
