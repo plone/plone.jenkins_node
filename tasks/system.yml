@@ -57,7 +57,6 @@
     - xfonts-scalable
     - xfonts-cyrillic
     - imagemagick
-    - firefox
     - ufw
     - fail2ban
     - unattended-upgrades
