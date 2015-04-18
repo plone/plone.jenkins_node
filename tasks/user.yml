@@ -4,10 +4,9 @@
   sudo: yes
   user: name=jenkins
 
-- name: "user: download public key from GitHub"
-  sudo: yes
-  sudo_user: jenkins
+- name: "user: download authorized key"
   get_url: url=https://raw.githubusercontent.com/plone/jenkins.plone.org/master/jenkins.plone.org.pub dest=/tmp/jenkins.authorized_keys
+  delegate_to: 127.0.0.1
 
 - name: "user: install authorized key"
   sudo: yes
