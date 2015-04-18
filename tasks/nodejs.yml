@@ -37,6 +37,7 @@
     chdir=/tmp/{{ node_dir.stdout }}
 
 - name: "node.js: clean up node install"
+  sudo: yes
   shell:
     rm -rf /tmp/node-*
 
