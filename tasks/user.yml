@@ -16,7 +16,7 @@
 - name: "user: git config"
   sudo: yes
   sudo_user: jenkins
-  template: src=etc/.gitconfig dest=/home/jenkins/.gitconfig owner=jenkins group=jenkins
+  copy: src=gitconfig dest=/home/jenkins/.gitconfig owner=jenkins group=jenkins
 
 - name: "~/.buildout: create main folder"
   sudo: yes
@@ -34,4 +34,4 @@
 - name: "~/.buidlout: default.cfg"
   sudo: yes
   sudo_user: jenkins
-  template: src=etc/default.cfg dest=/home/jenkins/.buildout/default.cfg owner=jenkins group=jenkins
+  copy: src=etc/default.cfg dest=/home/jenkins/.buildout/default.cfg owner=jenkins group=jenkins
