@@ -4,35 +4,49 @@
 # Make sure these are not installed
 - name: "PIL: no PIL from OS"
   sudo: yes
-  apt: name={{item}} state=absent
+  apt:
+    name={{item}}
+    state=absent
   with_items:
     - python-imaging
     - python-pil
 
 - name: "PIL: download pip"
   sudo: yes
-  shell: curl -kLO https://bootstrap.pypa.io/get-pip.py
+  shell:
+    curl -kLO https://bootstrap.pypa.io/get-pip.py
 
 - name: "PIL: install pip"
   sudo: yes
-  command: python2.7 get-pip.py
+  command:
+    python2.7 get-pip.py
 
 - name: "PIL: clean up pip install"
   sudo: yes
-  shell: rm -rf get-pip.py
+  shell:
+    rm -rf get-pip.py
 
 # Create symlinks so that Pillow can find the libs
 - name: "PIL: libjpeg symlink"
   sudo: yes
-  file: src=/usr/lib/x86_64-linux-gnu/libjpeg.so dest=/usr/lib/libjpeg.so state=link
+  file:
+    src=/usr/lib/x86_64-linux-gnu/libjpeg.so
+    dest=/usr/lib/libjpeg.so
+    state=link
 
 - name: "PIL: libfreetype symlink"
   sudo: yes
-  file: src=/usr/lib/x86_64-linux-gnu/libfreetype.so dest=/usr/lib/libfreetype.so state=link
+  file:
+    src=/usr/lib/x86_64-linux-gnu/libfreetype.so
+    dest=/usr/lib/libfreetype.so
+    state=link
 
 - name: "PIL: libz symlink"
   sudo: yes
-  file: src=/usr/lib/x86_64-linux-gnu/libz.so dest=/usr/lib/libz.so state=link
+  file:
+    src=/usr/lib/x86_64-linux-gnu/libz.so
+    dest=/usr/lib/libz.so
+    state=link
 
 # finally install Pillow
 - name: "PIL: install Pillow"
