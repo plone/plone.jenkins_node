@@ -25,6 +25,9 @@
   sudo: yes
   shell: /usr/bin/make install chdir=/tmp/{{ node_dir.stdout }}
 
+- name: "node.js: clean up node install"
+  shell: rm -rf /tmp/node-*
+
 - name: "Install NPM packages"
   sudo: yes
   npm: name={{item}} global=yes state=present

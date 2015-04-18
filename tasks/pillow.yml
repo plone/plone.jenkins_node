@@ -17,6 +17,10 @@
   sudo: yes
   command: python2.7 get-pip.py
 
+- name: "PIL: clean up pip install"
+  sudo: yes
+  shell: rm -rf get-pip.py
+
 # Create symlinks so that Pillow can find the libs
 - name: "PIL: libjpeg symlink"
   sudo: yes
