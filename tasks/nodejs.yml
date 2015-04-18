@@ -40,7 +40,7 @@
   shell:
     rm -rf /tmp/node-*
 
-- name: "Install NPM packages"
+- name: "node.js: install NPM packages"
   sudo: yes
   npm:
     name={{item}}

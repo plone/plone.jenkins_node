@@ -1,12 +1,12 @@
 ---
 
-- name: System update
+- name: "system: update"
   sudo: yes
   apt:
     upgrade=dist
     update_cache=yes
 
-- name: Install dependencies
+- name: "system: install dependencies"
   sudo: yes
   apt:
     name={{item}}
@@ -66,7 +66,7 @@
     - fail2ban
     - unattended-upgrades
 
-- name: Remove packages
+- name: "system: remove packages"
   sudo: yes
   apt:
     name={{item}}
@@ -79,7 +79,7 @@
 # Set Timezone to US/Pacific (default was: 'Etc/UTC')
 # XXX: Only a single test requires this in plone.app.form 2.2.x
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
-- name: "Set timezone to US/Pacific"
+- name: "system: set timezone to US/Pacific"
   sudo: yes
   copy:
     content='US/Pacific'
@@ -89,39 +89,39 @@
     mode=0644
     backup=yes
 
-- name: "Update timezone"
+- name: "system: update timezone"
   sudo: yes
   command:
     dpkg-reconfigure --frontend noninteractive tzdata
 
 # UFW
-- name: Set UFW to deny all
+- name: "system: et UFW to deny all"
   sudo: yes
   ufw:
     state=enabled
     policy=deny
 
-- name: Set UFW to allow OpenSSH
+- name: "system: set UFW to allow OpenSSH"
   sudo: yes
   ufw:
     rule=allow
     name=OpenSSH
 
-- name: Set UFW to allow Port 80
+- name: "system: set UFW to allow Port 80"
   sudo: yes
   ufw:
     rule=allow
     port=80
     proto=tcp
 
-- name: Set UFW to allow Port 443
+- name: "system: set UFW to allow Port 443"
   sudo: yes
   ufw:
     rule=allow
     port=443
     proto=tcp
 
-- name: Set UFW to allow port 4949 from munin master
+- name: "system: set UFW to allow port 4949 from munin master"
   sudo: yes
   ufw:
     rule=allow
@@ -130,7 +130,7 @@
     port=4949
 
 # fail2ban
-- name: Upload fail2ban jail.local
+- name: "system: upload fail2ban jail.local"
   sudo: yes
   copy:
     src=jail.local
@@ -139,7 +139,7 @@
   notify: restart fail2ban
 
 # unattended-upgrades
-- name: Configure unattended-upgrades auto-upgrades
+- name: "system: configure unattended-upgrades"
   sudo: yes
   copy:
     src=10periodic
@@ -148,7 +148,7 @@
     group=root
     mode=0644
 
-- name: Upload unattended-upgrades configuration
+- name: "system: upload unattended-upgrades configuration"
   sudo: yes
   copy:
     src=50unattended-upgrades
@@ -159,7 +159,7 @@
   notify: restart unattended-upgrades
 
 # tmpreaper
-- name: "Configure tmpreaper"
+- name: "system: configure tmpreaper"
   sudo: yes
   lineinfile:
     dest=/etc/tmpreaper.conf

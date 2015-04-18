@@ -26,7 +26,7 @@
     owner=jenkins
     group=jenkins
 
-- name: "~/.buildout: create main folder"
+- name: "user: create .buildout main folder"
   sudo: yes
   sudo_user: jenkins
   file:
@@ -35,7 +35,7 @@
     owner=jenkins
     group=jenkins
 
-- name: "~/.buildout: create subfolders"
+- name: "user: create .buildout subfolders"
   sudo: yes
   sudo_user: jenkins
   file:
@@ -47,7 +47,7 @@
     - eggs
     - downloads
 
-- name: "~/.buidlout: default.cfg"
+- name: "user: add default.cfg buildout config file"
   sudo: yes
   sudo_user: jenkins
   copy:
