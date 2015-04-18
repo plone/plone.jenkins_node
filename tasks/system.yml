@@ -111,3 +111,8 @@
   sudo: yes
   copy: src=50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades owner=root group=root mode=0644
   notify: restart unattended-upgrades
+
+# tmpreaper
+- name: "Configure tmpreaper"
+  sudo: yes
+  lineinfile: dest=/etc/tmpreaper.conf regexp=^TMPREAPER_TIME= line=TMPREAPER_TIME=24
