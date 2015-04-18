@@ -1,4 +1,5 @@
 ---
+# http://stackoverflow.com/questions/8915296
 
 # Make sure these are not installed
 - name: "PIL: no PIL from OS"
@@ -8,7 +9,6 @@
     - python-imaging
     - python-pil
 
-# http://stackoverflow.com/questions/8915296/python-image-library-fails-with-message-decoder-jpeg-not-available-pil
 - name: "PIL: download pip"
   sudo: yes
   shell: curl -kLO https://bootstrap.pypa.io/get-pip.py
