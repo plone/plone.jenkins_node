@@ -51,7 +51,7 @@
   sudo: yes
   sudo_user: jenkins
   copy:
-    src=etc/default.cfg
+    src=default.cfg
     dest=/home/jenkins/.buildout/default.cfg
     owner=jenkins
     group=jenkins
