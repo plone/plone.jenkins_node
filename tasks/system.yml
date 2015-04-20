@@ -95,7 +95,7 @@
     dpkg-reconfigure --frontend noninteractive tzdata
 
 # UFW
-- name: "system: et UFW to deny all"
+- name: "system: set UFW to deny all"
   sudo: yes
   ufw:
     state=enabled
