@@ -27,6 +27,7 @@
     - wv
     # PDF support
     - poppler-utils
+    - pdftohtml
     # Extract pypi packages
     - libbz2-dev
     # Code analysis
