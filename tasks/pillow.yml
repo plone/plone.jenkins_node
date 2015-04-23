@@ -16,7 +16,12 @@
   shell:
     curl -kLO https://bootstrap.pypa.io/get-pip.py
 
-- name: "PIL: install pip"
+- name: "PIL: install pip on Python 2.6"
+  sudo: yes
+  command:
+    python2.6 get-pip.py
+
+- name: "PIL: install pip on Python 2.7"
   sudo: yes
   command:
     python2.7 get-pip.py
@@ -49,6 +54,10 @@
     state=link
 
 # finally install Pillow
-- name: "PIL: install Pillow"
+- name: "PIL: install Pillow on Python 2.6"
   sudo: yes
-  pip: name=Pillow
+  pip: name=Pillow executable=pip2.6
+
+- name: "PIL: install Pillow on Python 2.7"
+  sudo: yes
+  pip: name=Pillow executable=pip2.7
