@@ -166,3 +166,10 @@
     dest=/etc/tmpreaper.conf
     regexp=^TMPREAPER_TIME=
     line=TMPREAPER_TIME=24
+
+# add Italian locale (for a single plone.app.form test p.a.form/widgets/datecomponents.txt)
+- name: "Install Italian locale"
+  sudo: yes
+  locale_gen:
+    name='it_IT.UTF-8'
+    state=present
