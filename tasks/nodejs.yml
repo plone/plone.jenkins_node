@@ -4,14 +4,14 @@
   sudo: yes
   sudo_user: jenkins
   get_url:
-    url=http://nodejs.org/dist/node-latest.tar.gz
+    url=http://nodejs.org/dist/v0.12.3/node-v0.12.3.tar.gz
     dest=/tmp/
 
 - name: "node.js: Unpack tarball"
   sudo: yes
   sudo_user: jenkins
   command:
-    tar zxf node-latest.tar.gz
+    tar zxf node-v0.12.3.tar.gz
     chdir=/tmp
 
 - name: "node.js: lookup directory name"
