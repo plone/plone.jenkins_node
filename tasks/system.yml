@@ -46,6 +46,7 @@
     - libfreetype6-dev
     - libjpeg-dev
     - libjpeg8-dev
+    - libtiff5-dev
     # Test coverage
     - enscript
     # lxml dependencies
