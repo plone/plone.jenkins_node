@@ -78,6 +78,13 @@
     - python-apt
     - libjpeg62-dev
 
+- name: "system: install python packages (globally)"
+  sudo: yes
+  pip:
+    name={{item}}
+  with_items:
+    - pygithub
+
 # Set Timezone to US/Pacific (default was: 'Etc/UTC')
 # XXX: Only a single test requires this in plone.app.form 2.2.x
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
