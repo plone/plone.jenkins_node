@@ -33,6 +33,8 @@
     # Code analysis
     - ohcount
     - sloccount
+    # i18n utility
+    - gettext
     # Python versions
     - python2.7
     - python2.7-dev
