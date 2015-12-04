@@ -46,7 +46,7 @@
   with_items:
     - eggs
     - downloads
-    - extends-cache
+    - extends
 
 - name: "user: add default.cfg buildout config file"
   sudo: yes
