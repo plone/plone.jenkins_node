@@ -8,6 +8,13 @@
 # Pillow
 - include: pillow.yml
 
+- name: "system: install python packages (globally)"
+  sudo: yes
+  pip:
+    name={{item}}
+  with_items:
+    - pygithub
+
 # Configure Jenkins user
 - include: user.yml
 
