@@ -3,7 +3,7 @@
 
 # Make sure these are not installed
 - name: "PIL: no PIL from OS"
-  sudo: yes
+  become: yes
   apt:
     name={{item}}
     state=absent
@@ -12,42 +12,42 @@
     - python-pil
 
 - name: "PIL: download pip"
-  sudo: yes
+  become: yes
   shell:
     curl -kLO https://bootstrap.pypa.io/get-pip.py
 
 - name: "PIL: install pip on Python 2.6"
-  sudo: yes
+  become: yes
   command:
     python2.6 get-pip.py
 
 - name: "PIL: install pip on Python 2.7"
-  sudo: yes
+  become: yes
   command:
     python2.7 get-pip.py
 
 - name: "PIL: clean up pip install"
-  sudo: yes
+  become: yes
   shell:
     rm -rf get-pip.py
 
 # Create symlinks so that Pillow can find the libs
 - name: "PIL: libjpeg symlink"
-  sudo: yes
+  become: yes
   file:
     src=/usr/lib/x86_64-linux-gnu/libjpeg.so
     dest=/usr/lib/libjpeg.so
     state=link
 
 - name: "PIL: libfreetype symlink"
-  sudo: yes
+  become: yes
   file:
     src=/usr/lib/x86_64-linux-gnu/libfreetype.so
     dest=/usr/lib/libfreetype.so
     state=link
 
 - name: "PIL: libz symlink"
-  sudo: yes
+  become: yes
   file:
     src=/usr/lib/x86_64-linux-gnu/libz.so
     dest=/usr/lib/libz.so
@@ -55,9 +55,9 @@
 
 # finally install Pillow
 - name: "PIL: install Pillow on Python 2.6"
-  sudo: yes
+  become: yes
   pip: name=Pillow executable=pip2.6
 
 - name: "PIL: install Pillow on Python 2.7"
-  sudo: yes
+  become: yes
   pip: name=Pillow executable=pip2.7

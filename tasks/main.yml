@@ -9,7 +9,7 @@
 - include: pillow.yml
 
 - name: "system: install python packages (globally)"
-  sudo: yes
+  become: yes
   pip:
     name={{item}}
   with_items:

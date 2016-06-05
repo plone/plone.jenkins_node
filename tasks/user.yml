@@ -1,7 +1,7 @@
 ---
 
 - name: "user: add jenkins user"
-  sudo: yes
+  become: yes
   user: name=jenkins
 
 - name: "user: download authorized key"
@@ -11,15 +11,15 @@
   delegate_to: 127.0.0.1
 
 - name: "user: install authorized key"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   authorized_key:
     user=jenkins
     key="{{ lookup('file', '/tmp/jenkins.authorized_keys') }}"
 
 - name: "user: git config"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   copy:
     src=gitconfig
     dest=/home/jenkins/.gitconfig
@@ -27,8 +27,8 @@
     group=jenkins
 
 - name: "user: create .buildout main folder"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   file:
     path=/home/jenkins/.buildout
     state=directory
@@ -36,8 +36,8 @@
     group=jenkins
 
 - name: "user: create .buildout subfolders"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   file:
     path=/home/jenkins/.buildout/{{ item }}
     state=directory
@@ -49,8 +49,8 @@
     - extends
 
 - name: "user: add default.cfg buildout config file"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   copy:
     src=default.cfg
     dest=/home/jenkins/.buildout/default.cfg

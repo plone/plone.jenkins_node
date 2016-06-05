@@ -1,13 +1,13 @@
 ---
 
 - name: "py26: Install deadsnakes PPA"
-  sudo: yes
+  become: yes
   apt_repository:
     repo='ppa:fkrull/deadsnakes'
     state=present
 
 - name: "py26: install python 2.6"
-  sudo: yes
+  become: yes
   apt:
     name={{ item }}
     state=present
@@ -27,7 +27,7 @@
     chdir=/tmp
 
 - name: "py26: install lxml"
-  sudo: yes
+  become: yes
   command:
     python2.6 setup.py install
     chdir=/tmp/lxml-2.3.6
@@ -44,7 +44,7 @@
     chdir=/tmp
 
 - name: "py26: install bz2"
-  sudo: yes
+  become: yes
   command:
     python2.6 setup.py install
     chdir=/tmp/python-bz2-1.1
@@ -52,7 +52,7 @@
 # Imaging
 # https://unix.stackexchange.com/questions/105265
 - name: "py26: freetype symlink"
-  sudo: yes
+  become: yes
   file:
     src=/usr/include/freetype2
     dest=/usr/include/freetype
@@ -69,7 +69,7 @@
     chdir=/tmp
 
 - name: "py26: install imaging"
-  sudo: yes
+  become: yes
   command:
     python2.6 setup.py install
     chdir=/tmp/Imaging-1.1.7

@@ -3,7 +3,7 @@
 
 # Firefox
 - name: "Browsers: firefox: remove from distro"
-  sudo: yes
+  become: yes
   apt:
     name=firefox
     state=absent
@@ -14,14 +14,14 @@
     chdir=/tmp/
 
 - name: "Browsers: firefox: install"
-  sudo: yes
+  become: yes
   apt:
     deb=/tmp/firefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb\?r\=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fubuntuzilla%2Ffiles%2Fmozilla%2Fapt%2Fpool%2Fmain%2Ff%2Ffirefox-mozilla-build%2Ffirefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb
 
 
 # PhantomJS
 - name: "Browsers: install PhantomJS"
-  sudo: yes
+  become: yes
   apt:
     name=phantomjs
     state=present

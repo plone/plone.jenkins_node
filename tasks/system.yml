@@ -1,13 +1,13 @@
 ---
 
 - name: "system: update"
-  sudo: yes
+  become: yes
   apt:
     upgrade=dist
     update_cache=yes
 
 - name: "system: install dependencies"
-  sudo: yes
+  become: yes
   apt:
     name={{item}}
     state=present
@@ -71,7 +71,7 @@
     - unattended-upgrades
 
 - name: "system: remove packages"
-  sudo: yes
+  become: yes
   apt:
     name={{item}}
     state=absent
@@ -84,7 +84,7 @@
 # XXX: Only a single test requires this in plone.app.form 2.2.x
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
 - name: "system: set timezone to US/Pacific"
-  sudo: yes
+  become: yes
   copy:
     content='US/Pacific'
     dest=/etc/timezone
@@ -94,39 +94,39 @@
     backup=yes
 
 - name: "system: update timezone"
-  sudo: yes
+  become: yes
   command:
     dpkg-reconfigure --frontend noninteractive tzdata
 
 # UFW
 - name: "system: set UFW to deny all"
-  sudo: yes
+  become: yes
   ufw:
     state=enabled
     policy=deny
 
 - name: "system: set UFW to allow OpenSSH"
-  sudo: yes
+  become: yes
   ufw:
     rule=allow
     name=OpenSSH
 
 - name: "system: set UFW to allow Port 80"
-  sudo: yes
+  become: yes
   ufw:
     rule=allow
     port=80
     proto=tcp
 
 - name: "system: set UFW to allow Port 443"
-  sudo: yes
+  become: yes
   ufw:
     rule=allow
     port=443
     proto=tcp
 
 - name: "system: set UFW to allow port 4949 from munin master"
-  sudo: yes
+  become: yes
   ufw:
     rule=allow
     src=162.209.104.107
@@ -135,7 +135,7 @@
 
 # fail2ban
 - name: "system: upload fail2ban jail.local"
-  sudo: yes
+  become: yes
   copy:
     src=jail.local
     dest=/etc/fail2ban/jail.local
@@ -144,7 +144,7 @@
 
 # unattended-upgrades
 - name: "system: configure unattended-upgrades"
-  sudo: yes
+  become: yes
   copy:
     src=10periodic
     dest=/etc/apt/apt.conf.d/10periodic
@@ -153,7 +153,7 @@
     mode=0644
 
 - name: "system: upload unattended-upgrades configuration"
-  sudo: yes
+  become: yes
   copy:
     src=50unattended-upgrades
     dest=/etc/apt/apt.conf.d/50unattended-upgrades
@@ -164,7 +164,7 @@
 
 # tmpreaper
 - name: "system: configure tmpreaper"
-  sudo: yes
+  become: yes
   lineinfile:
     dest=/etc/tmpreaper.conf
     regexp=^TMPREAPER_TIME=

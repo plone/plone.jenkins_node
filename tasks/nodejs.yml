@@ -1,29 +1,29 @@
 ---
 
 - name: "node.js: fetch sources"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   get_url:
     url=http://nodejs.org/dist/v0.12.3/node-v0.12.3.tar.gz
     dest=/tmp/
 
 - name: "node.js: Unpack tarball"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   command:
     tar zxf node-v0.12.3.tar.gz
     chdir=/tmp
 
 - name: "node.js: lookup directory name"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   shell:
     ls /tmp | grep node-v | sort | head -n1
   register: node_dir
 
 - name: "user: create .local folder"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   file:
     path=/home/jenkins/.local
     state=directory
@@ -31,42 +31,42 @@
     group=jenkins
 
 - name: "node.js: configure"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   shell:
     ./configure --prefix=/home/jenkins/.local
     chdir=/tmp/{{ node_dir.stdout }}
 
 - name: "node.js: make"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   shell:
     /usr/bin/make
     chdir=/tmp/{{ node_dir.stdout }}
 
 - name: "node.js: make install"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   shell:
     /usr/bin/make install
     chdir=/tmp/{{ node_dir.stdout }}
 
 # this is only useful when connecting to a node, Jenkins needs another tweak
 - name: "node.js: add nodejs on PATH"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   shell:
     echo "PATH=$PATH:/home/jenkins/.local/bin" >> /home/jenkins/.bashrc
 
 - name: "node.js: clean up node install"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   shell:
     rm -rf /tmp/node-*
 
 - name: "node.js: install NPM packages"
-  sudo: yes
-  sudo_user: jenkins
+  become: yes
+  become_user: jenkins
   npm:
     name={{item}}
     global=yes
