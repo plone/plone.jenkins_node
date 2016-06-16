@@ -13,7 +13,7 @@
     state=present
   with_items:
     # Java is needed in order to connect the Jenkins slaves to the master
-    - openjdk-7-jre
+    - openjdk-8-jre
     # Basics
     - build-essential
     - htop
