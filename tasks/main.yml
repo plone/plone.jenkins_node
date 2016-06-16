@@ -2,19 +2,6 @@
 # update and configure the system
 - include: system.yml
 
-# Python 2.6
-- include: py26.yml
-
-# Pillow
-- include: pillow.yml
-
-- name: "system: install python packages (globally)"
-  become: yes
-  pip:
-    name={{item}}
-  with_items:
-    - pygithub
-
 # Configure Jenkins user
 - include: user.yml
 
