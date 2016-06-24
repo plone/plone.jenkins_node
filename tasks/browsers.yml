@@ -8,15 +8,15 @@
     name=firefox
     state=absent
 
-- name: "Browsers: firefox: download version 34"
+- name: "Browsers: firefox: download version 46"
   shell:
-    wget http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fubuntuzilla%2Ffiles%2Fmozilla%2Fapt%2Fpool%2Fmain%2Ff%2Ffirefox-mozilla-build%2Ffirefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb
+    wget http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_46.0.1-0ubuntu1_amd64.deb
     chdir=/tmp/
 
 - name: "Browsers: firefox: install"
   become: yes
   apt:
-    deb=/tmp/firefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb\?r\=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fubuntuzilla%2Ffiles%2Fmozilla%2Fapt%2Fpool%2Fmain%2Ff%2Ffirefox-mozilla-build%2Ffirefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb
+    deb=/tmp/firefox-mozilla-build_46.0.1-0ubuntu1_amd64.deb
 
 
 # PhantomJS
