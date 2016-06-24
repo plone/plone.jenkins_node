@@ -10,14 +10,14 @@
 - name: "node.js: Unpack tarball"
   become: yes
   become_user: jenkins
-  command:
+  command: |
     tar zxf node-v0.12.3.tar.gz
     chdir=/tmp
 
 - name: "node.js: lookup directory name"
   become: yes
   become_user: jenkins
-  shell:
+  shell: |
     ls /tmp | grep node-v | sort | head -n1
   register: node_dir
 
@@ -33,21 +33,21 @@
 - name: "node.js: configure"
   become: yes
   become_user: jenkins
-  shell:
+  shell: |
     ./configure --prefix=/home/jenkins/.local
     chdir=/tmp/{{ node_dir.stdout }}
 
 - name: "node.js: make"
   become: yes
   become_user: jenkins
-  shell:
+  shell: |
     /usr/bin/make
     chdir=/tmp/{{ node_dir.stdout }}
 
 - name: "node.js: make install"
   become: yes
   become_user: jenkins
-  shell:
+  shell: |
     /usr/bin/make install
     chdir=/tmp/{{ node_dir.stdout }}
 
@@ -55,13 +55,13 @@
 - name: "node.js: add nodejs on PATH"
   become: yes
   become_user: jenkins
-  shell:
+  shell: |
     echo "PATH=$PATH:/home/jenkins/.local/bin" >> /home/jenkins/.bashrc
 
 - name: "node.js: clean up node install"
   become: yes
   become_user: jenkins
-  shell:
+  shell: |
     rm -rf /tmp/node-*
 
 - name: "node.js: install NPM packages"
