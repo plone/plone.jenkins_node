@@ -1,28 +1,48 @@
 ---
 # Install/configure everything related to web browsers
 
+- name: Check firefox version installed
+  shell: dpkg -s firefox-mozilla-build | grep "^Version" | cut -d" " -f2
+  register: firefox_installed_version
+  ignore_errors: True
+
+- name: Check if firefox is installed
+  shell: dpkg -s firefox-mozilla-build | grep "^Status" | cut -d" " -f2
+  register: firefox_is_installed
+  ignore_errors: True
+
 # Firefox
-- name: "Browsers: firefox: remove from distro"
+- name: "Browsers: firefox: remove stock version from distro"
   become: yes
   apt:
     name=firefox
     state=absent
 
+- name: "Browsers: firefox: remove custom version"
+  become: yes
+  apt:
+    name=firefox-mozilla-build
+    state=absent
+  when: firefox_is_installed.stdout == 'install' and firefox_installed_version.stdout != '{{ firefox_version }}'
+
 - name: "Browsers: firefox: install system dependencies"
   apt:
     pkg=firefox
     state=build-dep
+  when: firefox_is_installed.stdout != 'install'
 
 - name: "Browsers: firefox: download"
   get_url:
     url="https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/{{ firefox_file_name }}"
     dest=/tmp
     checksum="sha512:{{ firefox_checksum }}"
+  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != '{{ firefox_version }}'
 
 - name: "Browsers: firefox: install"
   become: yes
   apt:
     deb="/tmp/{{ firefox_file_name }}"
+  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != '{{ firefox_version }}'
 
 # PhantomJS
 - name: "Browsers: install PhantomJS"
