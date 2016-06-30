@@ -47,6 +47,7 @@
     - eggs
     - downloads
     - extends
+    - cache
 
 - name: "user: add default.cfg buildout config file"
   become: yes
