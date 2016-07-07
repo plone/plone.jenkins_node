@@ -1,0 +1,18 @@
+---
+
+- name: "venv: copy requirements.txt"
+  become: yes
+  become_user: jenkins
+  copy:
+    src=requirements.txt
+    dest=/tmp/requirements.txt
+    owner=jenkins
+    group=jenkins
+
+- name: "venv: create virtual environment"
+  become: yes
+  become_user: jenkins
+  pip:
+    requirements=/tmp/requirements.txt
+    virtualenv=/home/jenkins/venv-requests
+    virtualenv_command=/srv/python2.7/bin/virtualenv

@@ -8,6 +8,9 @@
 # Node.js
 - include: nodejs.yml
 
+# Create virtual environments
+- include: venv.yml
+
 # Browsers (firefox, et al)
 - include: browsers.yml
 
