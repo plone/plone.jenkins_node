@@ -23,3 +23,6 @@
 
 # Browsers (firefox, et al)
 - include: browsers.yml
+
+# jMeter
+- include: jmeter.yml
