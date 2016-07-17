@@ -1,11 +1,17 @@
 ---
 
+- name: "node.js: check if it is installed"
+  shell: /home/jenkins/.local/bin/node --version
+  register: node_js_version
+  ignore_errors: True
+
 - name: "node.js: fetch sources"
   become: yes
   become_user: jenkins
   get_url:
     url=http://nodejs.org/dist/v0.12.3/node-v0.12.3.tar.gz
     dest=/tmp/
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: unpack tarball"
   become: yes
@@ -13,6 +19,7 @@
   command: |
     tar zxf node-v0.12.3.tar.gz
     chdir=/tmp
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: lookup directory name"
   become: yes
@@ -20,6 +27,7 @@
   shell: |
     ls /tmp | grep node-v | sort | head -n1
   register: node_dir
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: create .local folder"
   become: yes
@@ -29,6 +37,7 @@
     state=directory
     owner=jenkins
     group=jenkins
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: configure"
   become: yes
@@ -36,6 +45,7 @@
   shell: |
     ./configure --prefix=/home/jenkins/.local
     chdir=/tmp/{{ node_dir.stdout }}
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: make"
   become: yes
@@ -43,6 +53,7 @@
   shell: |
     /usr/bin/make
     chdir=/tmp/{{ node_dir.stdout }}
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: make install"
   become: yes
@@ -50,6 +61,7 @@
   shell: |
     /usr/bin/make install
     chdir=/tmp/{{ node_dir.stdout }}
+  when: node_js_version.stdout != 'v0.12.3'
 
 # this is only useful when connecting to a node, Jenkins needs another tweak
 - name: "node.js: add nodejs on PATH"
@@ -57,12 +69,14 @@
   become_user: jenkins
   shell: |
     echo "PATH=$PATH:/home/jenkins/.local/bin" >> /home/jenkins/.bashrc
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: clean up node install"
   become: yes
   become_user: jenkins
   shell: |
     rm -rf /tmp/node-*
+  when: node_js_version.stdout != 'v0.12.3'
 
 - name: "node.js: install NPM packages"
   become: yes
@@ -75,3 +89,4 @@
     - bower
     - jshint
     - csslint
+  when: node_js_version.stdout != 'v0.12.3'
