@@ -1,8 +1,11 @@
 ---
-# handlers file for plone.jenkins_node
 
-- name: restart fail2ban
-  service: name=fail2ban state=restarted
+- name: "Handlers: restart fail2ban"
+  service:
+    name=fail2ban
+    state=restarted
 
-- name: restart unattended-upgrades
-  service: name=unattended-upgrades state=restarted
+- name: "Handlers: restart unattended-upgrades"
+  service:
+    name=unattended-upgrades
+    state=restarted

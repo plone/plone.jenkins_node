@@ -7,7 +7,7 @@
     url=http://nodejs.org/dist/v0.12.3/node-v0.12.3.tar.gz
     dest=/tmp/
 
-- name: "node.js: Unpack tarball"
+- name: "node.js: unpack tarball"
   become: yes
   become_user: jenkins
   command: |
@@ -21,7 +21,7 @@
     ls /tmp | grep node-v | sort | head -n1
   register: node_dir
 
-- name: "user: create .local folder"
+- name: "node.js: create .local folder"
   become: yes
   become_user: jenkins
   file:

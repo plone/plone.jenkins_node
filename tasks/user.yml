@@ -1,23 +1,24 @@
 ---
 
-- name: "user: add jenkins user"
+- name: "User: add jenkins user"
   become: yes
-  user: name=jenkins
+  user:
+    name=jenkins
 
-- name: "user: download authorized key"
+- name: "User: download authorized key"
   get_url:
     url=https://raw.githubusercontent.com/plone/jenkins.plone.org/master/jenkins.plone.org.pub
     dest=/tmp/jenkins.authorized_keys
   delegate_to: 127.0.0.1
 
-- name: "user: install authorized key"
+- name: "User: install authorized key"
   become: yes
   become_user: jenkins
   authorized_key:
     user=jenkins
     key="{{ lookup('file', '/tmp/jenkins.authorized_keys') }}"
 
-- name: "user: git config"
+- name: "User: git config"
   become: yes
   become_user: jenkins
   copy:
@@ -26,7 +27,7 @@
     owner=jenkins
     group=jenkins
 
-- name: "user: create .buildout main folder"
+- name: "User: create .buildout main folder"
   become: yes
   become_user: jenkins
   file:
@@ -35,7 +36,7 @@
     owner=jenkins
     group=jenkins
 
-- name: "user: create .buildout subfolders"
+- name: "User: create .buildout subfolders"
   become: yes
   become_user: jenkins
   file:
@@ -49,7 +50,7 @@
     - extends
     - cache
 
-- name: "user: add default.cfg buildout config file"
+- name: "User: add default.cfg buildout config file"
   become: yes
   become_user: jenkins
   copy:

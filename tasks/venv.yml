@@ -1,6 +1,6 @@
 ---
 
-- name: "venv: copy requirements.txt"
+- name: "Venv: copy requirements.txt"
   become: yes
   become_user: jenkins
   copy:
@@ -9,7 +9,7 @@
     owner=jenkins
     group=jenkins
 
-- name: "venv: create virtual environment"
+- name: "Venv: create virtual environment"
   become: yes
   become_user: jenkins
   pip:
