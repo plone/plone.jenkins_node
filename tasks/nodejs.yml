@@ -9,25 +9,29 @@
   become: yes
   become_user: jenkins
   get_url:
-    url=http://nodejs.org/dist/v0.12.3/node-v0.12.3.tar.gz
+    url=https://nodejs.org/dist/v4.4.7/node-v4.4.7-linux-x64.tar.xz
+    checksum=sha256:f28beed1b553696c14af078e484439e7c0eb6510b5608235f60873ba238e3907
     dest=/tmp/
-  when: node_js_version.stdout != 'v0.12.3'
+  when: node_js_version.stdout != 'v4.4.7'
 
-- name: "node.js: unpack tarball"
+- name: "node.js: unpack"
   become: yes
   become_user: jenkins
-  command: |
-    tar zxf node-v0.12.3.tar.gz
-    chdir=/tmp
-  when: node_js_version.stdout != 'v0.12.3'
+  unarchive: |
+    src=/tmp/node-v4.4.7-linux-x64.tar.xz
+    dest=/tmp
+    copy=no
+  when: node_js_version.stdout != 'v4.4.7'
 
-- name: "node.js: lookup directory name"
+- name: "node.js: delete .local folder"
   become: yes
   become_user: jenkins
-  shell: |
-    ls /tmp | grep node-v | sort | head -n1
-  register: node_dir
-  when: node_js_version.stdout != 'v0.12.3'
+  file:
+    path=/home/jenkins/.local
+    state=absent
+    owner=jenkins
+    group=jenkins
+  when: node_js_version.stdout != 'v4.4.7'
 
 - name: "node.js: create .local folder"
   become: yes
@@ -37,31 +41,13 @@
     state=directory
     owner=jenkins
     group=jenkins
-  when: node_js_version.stdout != 'v0.12.3'
+  when: node_js_version.stdout != 'v4.4.7'
 
-- name: "node.js: configure"
+- name: "node.js: copy node to .local folder"
   become: yes
   become_user: jenkins
-  shell: |
-    ./configure --prefix=/home/jenkins/.local
-    chdir=/tmp/{{ node_dir.stdout }}
-  when: node_js_version.stdout != 'v0.12.3'
-
-- name: "node.js: make"
-  become: yes
-  become_user: jenkins
-  shell: |
-    /usr/bin/make
-    chdir=/tmp/{{ node_dir.stdout }}
-  when: node_js_version.stdout != 'v0.12.3'
-
-- name: "node.js: make install"
-  become: yes
-  become_user: jenkins
-  shell: |
-    /usr/bin/make install
-    chdir=/tmp/{{ node_dir.stdout }}
-  when: node_js_version.stdout != 'v0.12.3'
+  shell: cp -r /tmp/node-v4.4.7-linux-x64/* /home/jenkins/.local/
+  when: node_js_version.stdout != 'v4.4.7'
 
 # this is only useful when connecting to a node, Jenkins needs another tweak
 - name: "node.js: add nodejs on PATH"
@@ -69,14 +55,7 @@
   become_user: jenkins
   shell: |
     echo "PATH=$PATH:/home/jenkins/.local/bin" >> /home/jenkins/.bashrc
-  when: node_js_version.stdout != 'v0.12.3'
-
-- name: "node.js: clean up node install"
-  become: yes
-  become_user: jenkins
-  shell: |
-    rm -rf /tmp/node-*
-  when: node_js_version.stdout != 'v0.12.3'
+  when: node_js_version.stdout != 'v4.4.7'
 
 - name: "node.js: install NPM packages"
   become: yes
@@ -89,4 +68,4 @@
     - bower
     - jshint
     - csslint
-  when: node_js_version.stdout != 'v0.12.3'
+  when: node_js_version.stdout != 'v4.4.7'
