@@ -1,11 +1,11 @@
 ---
 
-- name: "Handlers: restart fail2ban"
+- name: "restart fail2ban"
   service:
     name=fail2ban
     state=restarted
 
-- name: "Handlers: restart unattended-upgrades"
+- name: "restart unattended-upgrades"
   service:
     name=unattended-upgrades
     state=restarted
