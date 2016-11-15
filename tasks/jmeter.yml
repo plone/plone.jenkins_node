@@ -2,7 +2,7 @@
 # Install/configure everything related to jMeter
 
 - name: "jMeter: install"
-  sudo: yes
+  become: yes
   apt:
     name=jmeter
     state=present
