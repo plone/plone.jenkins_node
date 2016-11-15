@@ -6,7 +6,7 @@
   register: firefox_installed_version
   ignore_errors: True
 
-- name: "Browsers: Ffirefox: check if it is installed"
+- name: "Browsers: Firefox: check if it is installed"
   shell: dpkg -s firefox-mozilla-build | grep "^Status" | cut -d" " -f2
   register: firefox_is_installed
   ignore_errors: True
