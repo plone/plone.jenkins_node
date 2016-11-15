@@ -22,42 +22,15 @@
     - ntp
     # VCS
     - git-core
-    - subversion
     # Word support
     - wv
     # PDF support
     - poppler-utils
     - pdftohtml
-    # Extract pypi packages
-    - libbz2-dev
-    # Code analysis
-    - ohcount
-    - sloccount
     # i18n utility
     - gettext
-    # Python versions
-    - python2.7
-    - python2.7-dev
-    - python3.4
-    - python3.4-dev
     # Keep /tmp folder clean
     - tmpreaper
-    # Pillow dependencies
-    - zlib1g-dev
-    - libfreetype6
-    - libfreetype6-dev
-    - libjpeg-dev
-    - libjpeg8-dev
-    - libtiff5-dev
-    # Test coverage
-    - enscript
-    # lxml dependencies
-    - python-lxml
-    - libxslt1-dev
-    - libxml2-dev
-    - libxml2-utils
-    - libssl-dev
-    - libssl-doc
     # Robot Framework dependencies
     - xvfb
     - x11-apps
@@ -65,6 +38,7 @@
     - xfonts-75dpi
     - xfonts-scalable
     - xfonts-cyrillic
+    # Others / system
     - imagemagick
     - ufw
     - fail2ban
