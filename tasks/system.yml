@@ -54,6 +54,14 @@
     - python-apt
     - libjpeg62-dev
 
+# Install a locale suited to run tests
+# https://github.com/plone/Products.CMFPlone/blob/master/Products/CMFPlone/tests/testUnicodeSplitter.py
+- name: "System: install locale"
+  become: yes
+  locale_gen:
+    name=en_US.ISO-8859-15
+    state=present
+
 # Set Timezone to US/Pacific (default was: 'Etc/UTC')
 # XXX: Only a single test requires this in plone.app.form 2.2.x
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
