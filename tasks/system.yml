@@ -67,18 +67,8 @@
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
 - name: "System: set timezone to US/Pacific"
   become: yes
-  copy:
-    content='US/Pacific'
-    dest=/etc/timezone
-    owner=root
-    group=root
-    mode=0644
-    backup=yes
-
-- name: "System: update timezone"
-  become: yes
-  command:
-    dpkg-reconfigure --frontend noninteractive tzdata
+  timezone:
+    name=US/Pacific
 
 # UFW
 - name: "System: set UFW to deny all"
