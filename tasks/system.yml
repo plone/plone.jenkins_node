@@ -38,21 +38,20 @@
     - xfonts-75dpi
     - xfonts-scalable
     - xfonts-cyrillic
+    # Pillow deps
+    - libjpeg8-dev
+    - libwebp-dev
+    - libtiff5-dev
+    - libopenjpeg-dev
+    - libxml2-dev
+    - libxslt1-dev
     # Others / system
+    - libyaml-dev
+    - virtualenv
     - imagemagick
     - ufw
     - fail2ban
     - unattended-upgrades
-
-- name: "System: remove packages"
-  become: yes
-  apt:
-    name={{item}}
-    state=absent
-  with_items:
-    - python-software-properties
-    - python-apt
-    - libjpeg62-dev
 
 # Install a locale suited to run tests
 # https://github.com/plone/Products.CMFPlone/blob/master/Products/CMFPlone/tests/testUnicodeSplitter.py
