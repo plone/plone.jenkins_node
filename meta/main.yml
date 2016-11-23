@@ -11,10 +11,3 @@ galaxy_info:
       - trusty
   categories:
   - development
-dependencies:
- - { role: gforcada.compile-python,
-     py26: true,
-     pillow: true,
-     lxml: true,
-     become: true,
- }

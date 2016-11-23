@@ -15,4 +15,4 @@
   pip:
     requirements=/tmp/requirements.txt
     virtualenv=/home/jenkins/venv-requests
-    virtualenv_command=/srv/python2.7/bin/virtualenv
+    virtualenv_command=/usr/bin/virtualenv
