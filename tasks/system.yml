@@ -38,6 +38,9 @@
     - xfonts-75dpi
     - xfonts-scalable
     - xfonts-cyrillic
+    # python dev headers
+    - python2.7-dev
+    - python3.5-dev
     # Pillow deps
     - libjpeg8-dev
     - libwebp-dev
