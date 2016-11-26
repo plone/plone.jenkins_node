@@ -8,14 +8,8 @@
 # Node.js
 - include: nodejs.yml
 
-# Install python 2.6
-- include: py26.yml
-
-# Install pip on py27 and py35
-- include: pip.yml
-
-# Create virtual environments
-- include: venv.yml
+# Everything related to python
+- include: python.yml
 
 # Browsers (firefox, et al)
 - include: browsers.yml
