@@ -1,0 +1,19 @@
+---
+
+- name: "pip: download get-pip.py"
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /tmp/get-pip.py
+    mode: 0440
+
+- name: "pip: install pip on py27"
+  become: yes
+  shell: python2.7 /tmp/get-pip.py
+  args:
+    creates: /usr/local/bin/pip2.7
+
+- name: "pip: install pip on py35"
+  become: yes
+  shell: python3.5 /tmp/get-pip.py
+  args:
+    creates: /usr/local/bin/pip3.5
