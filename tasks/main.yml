@@ -5,9 +5,6 @@
 # Configure Jenkins user
 - include: user.yml
 
-# Node.js
-- include: nodejs.yml
-
 # Everything related to python
 - include: python.yml
 

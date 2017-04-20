@@ -11,3 +11,6 @@ galaxy_info:
       - trusty
   categories:
   - development
+
+dependencies:
+  - geerlingguy.nodejs
