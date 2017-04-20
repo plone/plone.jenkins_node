@@ -42,6 +42,8 @@
     - python2.7-dev
     - python3.5-dev
     - python3-venv
+    # pypy
+    - pypy
     # Pillow deps
     - libjpeg8-dev
     - libwebp-dev
