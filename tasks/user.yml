@@ -5,18 +5,12 @@
   user:
     name=jenkins
 
-- name: "User: download authorized key"
-  get_url:
-    url=https://raw.githubusercontent.com/plone/jenkins.plone.org/master/jenkins.plone.org.pub
-    dest=/tmp/jenkins.authorized_keys
-  delegate_to: 127.0.0.1
-
 - name: "User: install authorized key"
   become: yes
   become_user: jenkins
   authorized_key:
     user=jenkins
-    key="{{ lookup('file', '/tmp/jenkins.authorized_keys') }}"
+    key=https://raw.githubusercontent.com/plone/jenkins.plone.org/master/jenkins.plone.org.pub
 
 - name: "User: git config"
   become: yes
