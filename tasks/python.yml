@@ -6,13 +6,13 @@
   apt_repository:
     repo='ppa:fkrull/deadsnakes'
 
-- name: "python (py26):: update"
+- name: "python (py26): update"
   become: yes
   apt:
     upgrade=dist
     update_cache=yes
 
-- name: "python (py26):: install python 2.6"
+- name: "python (py26): install python 2.6"
   become: yes
   apt:
     name={{ item }}
