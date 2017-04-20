@@ -25,6 +25,12 @@
     state=absent
   when: firefox_is_installed.stdout == 'install' and firefox_installed_version.stdout != '{{ firefox_version }}'
 
+- name: "Browsers: Firefox: enable source repository"
+  apt_repository:
+    repo: deb-src http://us.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} main restricted
+    state: present
+  when: firefox_is_installed.stdout != 'install'
+
 - name: "Browsers: Firefox: install system dependencies"
   apt:
     pkg=firefox
