@@ -14,3 +14,4 @@ galaxy_info:
 
 dependencies:
   - geerlingguy.nodejs
+  - geerlingguy.munin-node
