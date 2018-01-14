@@ -1,8 +1,26 @@
 ---
 # Install/configure everything related to jMeter
 
-- name: "jMeter: install"
+- name: "jMeter: create folder"
+  file:
+    path: /opt/jmeter
+    state: directory
+    owner: jenkins
+    group: jenkins
+
+- name: "jMeter: download and install"
+  unarchive:
+    src: http://www-eu.apache.org/dist/jmeter/binaries/apache-jmeter-3.3.tgz
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+    dest: /opt/jmeter
+    owner: jenkins
+
+- name: "jMeter: create bin"
   become: yes
-  apt:
-    name=jmeter
-    state=present
+  file:
+    src: /opt/jmeter/bin/jmeter
+    dest: /usr/local/bin/jmeter
+    owner: jenkins
+    group: jenkins
+    state: link
