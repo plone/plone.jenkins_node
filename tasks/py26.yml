@@ -18,7 +18,7 @@
 # lxml
 - name: "py26: fetch lxml source"
   get_url:
-    url=http://pypi.python.org/packages/source/l/lxml/lxml-2.3.6.tar.gz
+    url=https://pypi.python.org/packages/source/l/lxml/lxml-2.3.6.tar.gz
     dest=/tmp/
 
 - name: "py26: unpack lxml tarball"
@@ -35,7 +35,7 @@
 # bz2
 - name: "py26: fetch bz2 source"
   get_url:
-    url=http://labix.org/download/python-bz2/python-bz2-1.1.tar.bz2
+    url=https://labix.org/download/python-bz2/python-bz2-1.1.tar.bz2
     dest=/tmp/
 
 - name: "py26: unpack bz2 tarball"
@@ -60,7 +60,7 @@
 
 - name: "py26: fetch imaging source"
   get_url:
-    url=http://effbot.org/downloads/Imaging-1.1.7.tar.gz
+    url=https://effbot.org/downloads/Imaging-1.1.7.tar.gz
     dest=/tmp/
 
 - name: "py26: unpack imaging tarball"

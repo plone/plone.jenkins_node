@@ -64,14 +64,45 @@
   shell:
     rm -rf /tmp/node-*
 
-- name: "node.js: install NPM packages"
-  sudo: yes
-  sudo_user: jenkins
-  npm:
-    name={{item}}
-    global=yes
-    state=present
-  with_items:
-    - bower
-    - jshint
-    - csslint
+# XXX: This does not work. npm is installed for jenkins user only but requires root access:
+#
+# jenkins@node5:~$ npm install -g bower
+# npm ERR! tar.unpack untar error /home/jenkins/.npm/bower/1.8.4/package.tgz
+# npm ERR! Linux 4.4.0-127-generic
+# npm ERR! argv "/home/jenkins/.local/bin/node" "/home/jenkins/.local/bin/npm" "install" "-g" "bower"
+# npm ERR! node v0.12.3
+# npm ERR! npm  v2.9.1
+# npm ERR! path /home/jenkins/.local/lib/node_modules/bower
+# npm ERR! code EACCES
+# npm ERR! errno -13
+
+# npm ERR! Error: EACCES, mkdir '/home/jenkins/.local/lib/node_modules/bower'
+# npm ERR!     at Error (native)
+# npm ERR!  { [Error: EACCES, mkdir '/home/jenkins/.local/lib/node_modules/bower']
+# npm ERR!   errno: -13,
+# npm ERR!   code: 'EACCES',
+# npm ERR!   path: '/home/jenkins/.local/lib/node_modules/bower',
+# npm ERR!   fstream_type: 'Directory',
+# npm ERR!   fstream_path: '/home/jenkins/.local/lib/node_modules/bower',
+# npm ERR!   fstream_class: 'DirWriter',
+# npm ERR!   fstream_stack:
+# npm ERR!    [ '/home/jenkins/.local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+# npm ERR!      '/home/jenkins/.local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+# npm ERR!      'FSReqWrap.oncomplete (fs.js:95:15)' ] }
+# npm ERR!
+# npm ERR! Please try running this command again as root/Administrator.
+
+# npm ERR! Please include the following file with any support request:
+# npm ERR!     /home/jenkins/npm-debug.log
+
+# - name: "node.js: install NPM packages"
+#   sudo: yes
+#   sudo_user: jenkins
+#   npm:
+#     name={{item}}
+#     global=yes
+#     state=present
+#   with_items:
+#     - bower
+#     - jshint
+#     - csslint

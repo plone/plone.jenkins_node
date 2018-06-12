@@ -3,7 +3,7 @@
 - include: system.yml
 
 # Python 2.6
-- include: py26.yml
+# - include: py26.yml
 
 # Pillow
 - include: pillow.yml
