@@ -19,14 +19,6 @@
   args:
     creates: /usr/local/bin/pip3.5
 
-- name: "python (py27): install pygithub globally"
-  become: yes
-  shell: pip2.7 install pygithub==1.26.0
-
-- name: "python (py35): install pygithub globally"
-  become: yes
-  shell: pip3.5 install pygithub==1.26.0
-
 # Create a virtualenv with requests on it
 - name: "python (venv): copy requirements.txt"
   become: yes
