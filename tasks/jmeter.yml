@@ -10,7 +10,7 @@
 
 - name: "jMeter: download and install"
   unarchive:
-    src: http://www-eu.apache.org/dist/jmeter/binaries/apache-jmeter-3.3.tgz
+    src: https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-3.3.tgz
     extra_opts: [--strip-components=1]
     remote_src: yes
     dest: /opt/jmeter
