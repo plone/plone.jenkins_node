@@ -23,7 +23,7 @@
   apt:
     name=firefox-mozilla-build
     state=absent
-  when: firefox_is_installed.stdout == 'install' and firefox_installed_version.stdout != '{{ firefox_version }}'
+  when: firefox_is_installed.stdout == 'install' and firefox_installed_version.stdout != firefox_version
 
 - name: "Browsers: Firefox: enable source repository"
   apt_repository:
@@ -42,13 +42,13 @@
     url="https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/{{ firefox_file_name }}"
     dest=/tmp
     checksum="sha512:{{ firefox_checksum }}"
-  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != '{{ firefox_version }}'
+  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != firefox_version
 
 - name: "Browsers: Firefox: install"
   become: yes
   apt:
     deb="/tmp/{{ firefox_file_name }}"
-  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != '{{ firefox_version }}'
+  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != firefox_version
 
 # PhantomJS
 - name: "Browsers: PhantomJS: install"
