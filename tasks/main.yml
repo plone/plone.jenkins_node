@@ -5,9 +5,6 @@
 # Configure Jenkins user
 - include: user.yml
 
-# Everything related to python
-- include: python.yml
-
 # Browsers (firefox, et al)
 - include: browsers.yml
 
