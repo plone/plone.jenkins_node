@@ -18,21 +18,3 @@
   shell: python3.5 /tmp/get-pip.py
   args:
     creates: /usr/local/bin/pip3.5
-
-# Create a virtualenv with requests on it
-- name: "python (venv): copy requirements.txt"
-  become: yes
-  become_user: jenkins
-  copy:
-    src=requirements.txt
-    dest=/tmp/requirements.txt
-    owner=jenkins
-    group=jenkins
-
-- name: "python (venv): create virtual environment"
-  become: yes
-  become_user: jenkins
-  pip:
-    requirements=/tmp/requirements.txt
-    virtualenv=/home/jenkins/venv-requests
-    virtualenv_command=/usr/bin/virtualenv
