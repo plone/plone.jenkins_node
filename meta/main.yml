@@ -17,7 +17,6 @@ dependencies:
      nodejs_version: "8.x",
   }
   - { role: gforcada.compile-python,
-     python_26: true,
      python_27: true,
      python_36: true,
      python_37: true,
