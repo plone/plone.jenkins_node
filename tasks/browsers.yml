@@ -56,3 +56,13 @@
   apt:
     name=phantomjs
     state=present
+
+# Chrome
+- name: "Browsers: Chromium: install"
+  become: yes
+  apt:
+    name={{ item }}
+    state=present
+  with_items:
+    - chromium-browser
+    - chromium-chromedriver
