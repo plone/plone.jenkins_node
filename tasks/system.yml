@@ -45,18 +45,18 @@
     - fail2ban
     - unattended-upgrades
 
-  - name: Install npm package dependencies (globally)
-    npm:
-      name: '{{ item }}'
-      global: yes
-      state: present
-    with_items:
-      - yarn
-      - npm-run-all
-      - prettier
-      - lint
-      - flow
-      - eslint
+- name: Install npm package dependencies (globally)
+  npm:
+    name: '{{ item }}'
+    global: yes
+    state: present
+  with_items:
+    - yarn
+    - npm-run-all
+    - prettier
+    - lint
+    - flow
+    - eslint
 
 # Install a locale suited to run tests
 # https://github.com/plone/Products.CMFPlone/blob/master/Products/CMFPlone/tests/testUnicodeSplitter.py
