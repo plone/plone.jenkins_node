@@ -57,7 +57,7 @@
       - lint
       - flow
       - eslint
-      
+
 # Install a locale suited to run tests
 # https://github.com/plone/Products.CMFPlone/blob/master/Products/CMFPlone/tests/testUnicodeSplitter.py
 - name: "System: install locale"
