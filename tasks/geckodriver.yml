@@ -1,0 +1,21 @@
+---
+
+- name: "Browsers: geckodriver | Check if geckodriver is installed"
+  become: true
+  shell: geckodriver --version | head -n1 | cut -d" " -f2
+  register: already_installed
+  ignore_errors: True
+
+- name: "Browsers: geckodriver: Download"
+  get_url:
+    url="{{ geckodriver_url }}"
+    dest="/tmp"
+    checksum="sha512:{{ geckodriver_checksum }}"
+  when: already_installed.stdout != geckodriver_version
+
+- name: "Browsers: geckodriver: Uncompress"
+  unarchive:
+    src=/tmp/{{ geckodriver_file_name }}
+    dest=/usr/local/bin/
+    copy=no
+  when: already_installed.stdout != geckodriver_version

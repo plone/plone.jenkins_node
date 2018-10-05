@@ -4,6 +4,9 @@
 # Firefox
 - include: firefox.yml
 
+# geckodriver
+- include: geckodriver.yml
+
 # PhantomJS
 - name: "Browsers: PhantomJS: install"
   become: yes
