@@ -1,0 +1,50 @@
+---
+
+- name: "Browsers: Firefox: check installed version"
+  shell: dpkg -s firefox-mozilla-build | grep "^Version" | cut -d" " -f2
+  register: firefox_installed_version
+  ignore_errors: True
+
+- name: "Browsers: Firefox: check if it is installed"
+  shell: dpkg -s firefox-mozilla-build | grep "^Status" | cut -d" " -f2
+  register: firefox_is_installed
+  ignore_errors: True
+
+# Firefox
+- name: "Browsers: Firefox: remove stock version from distro"
+  become: yes
+  apt:
+    name=firefox
+    state=absent
+
+- name: "Browsers: Firefox: remove custom version"
+  become: yes
+  apt:
+    name=firefox-mozilla-build
+    state=absent
+  when: firefox_is_installed.stdout == 'install' and firefox_installed_version.stdout != firefox_version
+
+- name: "Browsers: Firefox: enable source repository"
+  apt_repository:
+    repo: deb-src http://us.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} main restricted
+    state: present
+  when: firefox_is_installed.stdout != 'install'
+
+- name: "Browsers: Firefox: install system dependencies"
+  apt:
+    pkg=firefox
+    state=build-dep
+  when: firefox_is_installed.stdout != 'install'
+
+- name: "Browsers: Firefox: download"
+  get_url:
+    url="{{ firefox_url }}"
+    dest=/tmp
+    checksum="sha512:{{ firefox_checksum }}"
+  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != firefox_version
+
+- name: "Browsers: Firefox: install"
+  become: yes
+  apt:
+    deb="/tmp/{{ firefox_file_name }}"
+  when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != firefox_version

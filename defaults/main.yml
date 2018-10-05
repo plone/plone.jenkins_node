@@ -2,4 +2,5 @@
 
 firefox_version: 46.0.1-0ubuntu1
 firefox_file_name: "firefox-mozilla-build_{{ firefox_version }}_amd64.deb"
+firefox_url: "https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/{{ firefox_file_name }}"
 firefox_checksum: 5fd1e10590abcebe5227bc3a914e50031d561fc1162995eaccb3fa946688ce1498114b81ea1fe88748d1ad30cefb6001e4a9ecf4d71bd8f4e877c359c80ebda9
