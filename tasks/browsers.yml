@@ -18,8 +18,5 @@
 - name: "Browsers: Chromium: install"
   become: yes
   apt:
-    name={{ item }}
-    state=present
-  with_items:
-    - chromium-browser
-    - chromium-chromedriver
+    name: ['chromium-browser', 'chromium-chromedriver']
+    state: present
