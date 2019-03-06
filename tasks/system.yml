@@ -9,41 +9,40 @@
 - name: "System: install dependencies"
   become: yes
   apt:
-    name={{item}}
-    state=present
-  with_items:
-    # Java is needed in order to connect the Jenkins slaves to the master
-    - openjdk-8-jre
-    # Basics
-    - build-essential
-    - htop
-    - curl
-    # Time
-    - ntp
-    # VCS
-    - git-core
-    # Word support
-    - wv
-    # PDF support
-    - poppler-utils
-    - pdftohtml
-    # i18n utility
-    - gettext
-    # Keep /tmp folder clean
-    - tmpreaper
-    # Robot Framework dependencies
-    - xvfb
-    - x11-apps
-    - xfonts-100dpi
-    - xfonts-75dpi
-    - xfonts-scalable
-    - xfonts-cyrillic
-    # Others / system
-    - libyaml-dev
-    - imagemagick
-    - ufw
-    - fail2ban
-    - unattended-upgrades
+    state: present
+    name:
+      # Java is needed in order to connect the Jenkins slaves to the master
+      - openjdk-8-jre
+      # Basics
+      - build-essential
+      - htop
+      - curl
+      # Time
+      - ntp
+      # VCS
+      - git-core
+      # Word support
+      - wv
+      # PDF support
+      - poppler-utils
+      - pdftohtml
+      # i18n utility
+      - gettext
+      # Keep /tmp folder clean
+      - tmpreaper
+      # Robot Framework dependencies
+      - xvfb
+      - x11-apps
+      - xfonts-100dpi
+      - xfonts-75dpi
+      - xfonts-scalable
+      - xfonts-cyrillic
+      # Others / system
+      - libyaml-dev
+      - imagemagick
+      - ufw
+      - fail2ban
+      - unattended-upgrades
 
 - name: Install npm package dependencies (globally)
   npm:
