@@ -3,8 +3,8 @@
 - name: "System: update"
   become: yes
   apt:
-    upgrade=dist
-    update_cache=yes
+    upgrade: dist
+    update_cache: yes
 
 - name: "System: install dependencies"
   become: yes
@@ -62,8 +62,8 @@
 - name: "System: install locale"
   become: yes
   locale_gen:
-    name=en_US.ISO-8859-15
-    state=present
+    name: en_US.ISO-8859-15
+    state: present
 
 - name: "System: set environment variables"
   become: yes
@@ -80,7 +80,7 @@
 - name: "System: set timezone to US/Pacific"
   become: yes
   timezone:
-    name=US/Pacific
+    name: US/Pacific
 
 # UFW
 - name: "System: set UFW to deny all"
@@ -93,64 +93,64 @@
 - name: "System: set UFW to allow OpenSSH"
   become: yes
   ufw:
-    rule=allow
-    name=OpenSSH
+    rule: allow
+    name: OpenSSH
 
 - name: "System: set UFW to allow Port 80"
   become: yes
   ufw:
-    rule=allow
-    port=80
-    proto=tcp
+    rule: allow
+    port: 80
+    proto: tcp
 
 - name: "System: set UFW to allow Port 443"
   become: yes
   ufw:
-    rule=allow
-    port=443
-    proto=tcp
+    rule: allow
+    port: 443
+    proto: tcp
 
 - name: "System: set UFW to allow port 4949 from munin master"
   become: yes
   ufw:
-    rule=allow
-    src=162.209.104.107
-    proto=tcp
-    port=4949
+    rule: allow
+    src: 162.209.104.107
+    proto: tcp
+    port: 4949
 
 # fail2ban
 - name: "System: upload fail2ban jail.local"
   become: yes
   copy:
-    src=jail.local
-    dest=/etc/fail2ban/jail.local
-    mode=0644
+    src: jail.local
+    dest: /etc/fail2ban/jail.local
+    mode: 0644
   notify: restart fail2ban
 
 # unattended-upgrades
 - name: "System: configure unattended-upgrades"
   become: yes
   copy:
-    src=10periodic
-    dest=/etc/apt/apt.conf.d/10periodic
-    owner=root
-    group=root
-    mode=0644
+    src: 10periodic
+    dest: /etc/apt/apt.conf.d/10periodic
+    owner: root
+    group: root
+    mode: 0644
 
 - name: "System: upload unattended-upgrades configuration"
   become: yes
   copy:
-    src=50unattended-upgrades
-    dest=/etc/apt/apt.conf.d/50unattended-upgrades
-    owner=root
-    group=root
-    mode=0644
+    src: 50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    owner: root
+    group: root
+    mode: 0644
   notify: restart unattended-upgrades
 
 # tmpreaper
 - name: "System: configure tmpreaper"
   become: yes
   lineinfile:
-    dest=/etc/tmpreaper.conf
-    regexp=^TMPREAPER_TIME=
-    line=TMPREAPER_TIME=24
+    dest: /etc/tmpreaper.conf
+    regexp: "^TMPREAPER_TIME:"
+    line: TMPREAPER_TIME=24

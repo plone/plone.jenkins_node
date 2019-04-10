@@ -11,8 +11,8 @@
 - name: "Browsers: PhantomJS: install"
   become: yes
   apt:
-    name=phantomjs
-    state=present
+    name: phantomjs
+    state: present
 
 # Chrome
 - name: "Browsers: Chromium: install"

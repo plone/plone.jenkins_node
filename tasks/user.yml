@@ -3,42 +3,42 @@
 - name: "User: add jenkins user"
   become: yes
   user:
-    name=jenkins
-    shell=/bin/bash
+    name: jenkins
+    shell: /bin/bash
 
 - name: "User: install authorized key"
   become: yes
   become_user: jenkins
   authorized_key:
-    user=jenkins
-    key=https://raw.githubusercontent.com/plone/jenkins.plone.org/master/files/jenkins.plone.org.pub
+    user: jenkins
+    key: https://raw.githubusercontent.com/plone/jenkins.plone.org/master/files/jenkins.plone.org.pub
 
 - name: "User: git config"
   become: yes
   become_user: jenkins
   copy:
-    src=gitconfig
-    dest=/home/jenkins/.gitconfig
-    owner=jenkins
-    group=jenkins
+    src: gitconfig
+    dest: /home/jenkins/.gitconfig
+    owner: jenkins
+    group: jenkins
 
 - name: "User: create .buildout main folder"
   become: yes
   become_user: jenkins
   file:
-    path=/home/jenkins/.buildout
-    state=directory
-    owner=jenkins
-    group=jenkins
+    path: /home/jenkins/.buildout
+    state: directory
+    owner: jenkins
+    group: jenkins
 
 - name: "User: create .buildout subfolders"
   become: yes
   become_user: jenkins
   file:
-    path=/home/jenkins/.buildout/{{ item }}
-    state=directory
-    owner=jenkins
-    group=jenkins
+    path: /home/jenkins/.buildout/{{ item }}
+    state: directory
+    owner: jenkins
+    group: jenkins
   with_items:
     - eggs
     - downloads
@@ -49,7 +49,7 @@
   become: yes
   become_user: jenkins
   copy:
-    src=default.cfg
-    dest=/home/jenkins/.buildout/default.cfg
-    owner=jenkins
-    group=jenkins
+    src: default.cfg
+    dest: /home/jenkins/.buildout/default.cfg
+    owner: jenkins
+    group: jenkins
