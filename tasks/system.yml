@@ -86,8 +86,9 @@
 - name: "System: set UFW to deny all"
   become: yes
   ufw:
-    state=enabled
-    policy=deny
+    state: enabled
+    policy: deny
+    direction: incoming
 
 - name: "System: set UFW to allow OpenSSH"
   become: yes
