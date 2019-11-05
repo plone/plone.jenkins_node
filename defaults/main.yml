@@ -1,11 +1,11 @@
 ---
 
-firefox_version: 63.0.1-0ubuntu1
+firefox_version: 70.0.1-0ubuntu1
 firefox_file_name: "firefox-mozilla-build_{{ firefox_version }}_amd64.deb"
 firefox_url: "https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/{{ firefox_file_name }}"
-firefox_checksum: 7a0ac4670f5145ff2b845fda2d923cb353837f820642845dd1f7405d020f75dea16e0cc9da51bf4afbc89a67797b8fa63ef44249b22497a4f33c9f74acc06b05
+firefox_checksum: cf062abd196df71ea444b68c94b32344763e2455d4afc1100eb826c0f8b9d123c70cbfa547e7f807abb6a53ce62caa0e0ce90542ca8084619630fb0f5ba9ba7a
 
-geckodriver_version: 0.23.0
+geckodriver_version: 0.26.0
 geckodriver_file_name: "geckodriver-v{{ geckodriver_version }}-linux64.tar.gz"
 geckodriver_url: "https://github.com/mozilla/geckodriver/releases/download/v{{ geckodriver_version }}/{{ geckodriver_file_name }}"
-geckodriver_checksum: bc9b252808699818edea9d82fffb3bafb35819a88c8dc3130eebb6c3de6f5492c02df55de0b3f5ba2ff0e021971280be1a0faaa1817e0037424629f17d8cdc94
+geckodriver_checksum: 65a3062ba400a9dc5db19ad1527e0fe65e73c46b79d6bccc071981431d626ff2be7c6258a08d376939c9953eff6e71d57c875ffca0e85e38ffd543690c3851ee
