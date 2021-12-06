@@ -21,6 +21,8 @@ dependencies:
      python_36: true,
      python_37: true,
      python_38: true,
+     python_39: true,
+     python_310: true,
      lxml: true,
      pillow: true,
   }
