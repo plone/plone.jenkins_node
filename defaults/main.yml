@@ -1,5 +1,4 @@
 ---
-
 firefox_version: 70.0.1-0ubuntu1
 firefox_file_name: "firefox-mozilla-build_{{ firefox_version }}_amd64.deb"
 firefox_url: "https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/{{ firefox_file_name }}"
