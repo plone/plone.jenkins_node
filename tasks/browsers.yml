@@ -1,22 +1,20 @@
 ---
 # Install/configure everything related to web browsers
 
-# Firefox
-- include: firefox.yml
+- name: Install Firefox
+  ansible.builtin.import_tasks: firefox.yml
 
-# geckodriver
-- include: geckodriver.yml
+- name: Install geckodriver
+  ansible.builtin.import_tasks: geckodriver.yml
 
-# PhantomJS
 - name: "Browsers: PhantomJS: install"
-  become: yes
-  apt:
+  become: true
+  ansible.builtin.apt:
     name: phantomjs
     state: present
 
-# Chrome
 - name: "Browsers: Chromium: install"
-  become: yes
-  apt:
-    name: ['chromium-browser', 'chromium-chromedriver']
+  become: true
+  ansible.builtin.apt:
+    name: [chromium-browser, chromium-chromedriver]
     state: present

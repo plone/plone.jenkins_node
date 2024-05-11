@@ -1,5 +1,4 @@
 ---
-
 firefox_version: 70.0.1-0ubuntu1
 firefox_file_name: "firefox-mozilla-build_{{ firefox_version }}_amd64.deb"
 firefox_url: "https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/{{ firefox_file_name }}"
@@ -9,3 +8,6 @@ geckodriver_version: 0.26.0
 geckodriver_file_name: "geckodriver-v{{ geckodriver_version }}-linux64.tar.gz"
 geckodriver_url: "https://github.com/mozilla/geckodriver/releases/download/v{{ geckodriver_version }}/{{ geckodriver_file_name }}"
 geckodriver_checksum: 65a3062ba400a9dc5db19ad1527e0fe65e73c46b79d6bccc071981431d626ff2be7c6258a08d376939c9953eff6e71d57c875ffca0e85e38ffd543690c3851ee
+
+gh_raw: https://raw.githubusercontent.com
+gh_jenkins_repo: plone/jenkins.plone.org

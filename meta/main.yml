@@ -3,26 +3,24 @@ galaxy_info:
   author: Plone Foundation
   description: Jenkins CI Node
   company: Plone Foundation
-  license: license (GPLv2, CC-BY, etc)
-  min_ansible_version: 1.7.2
+  role_name: jenkins_node
+  namespace: plone
+  license: GPL-2.0
+  min_ansible_version: "2.2"
   platforms:
-  - name: Ubuntu
-    versions:
-      - trusty
-  categories:
-  - development
+    - name: Ubuntu
+      versions:
+        - trusty
+  galaxy_tags:
+    - development
 
 dependencies:
-  - { role: gforcada.compile-python,
-     python_27: true,
-     python_36: true,
-     python_37: true,
-     python_38: true,
-     python_39: true,
-     python_310: true,
-     python_311: true,
-     python_312: true,
-     lxml: true,
-     pillow: true,
-  }
-  - geerlingguy.munin-node
+  - role: gforcada.compile_python
+    python_27: true
+    python_38: true
+    python_39: true
+    python_310: true
+    python_311: true
+    python_312: true
+    lxml: true
+    pillow: true
