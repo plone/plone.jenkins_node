@@ -24,7 +24,7 @@ jobs:
 
       - name: Lint code.
         run: |
-          yamllint */*.yml
+          yamllint -c .yamllint.yml */*.yml
 
   playbook:
     name: ansible-playbook lint
