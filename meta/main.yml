@@ -13,9 +13,6 @@ galaxy_info:
   - development
 
 dependencies:
-  - { role: geerlingguy.nodejs,
-     nodejs_version: "8.x",
-  }
   - { role: gforcada.compile-python,
      python_27: true,
      python_36: true,
@@ -24,6 +21,7 @@ dependencies:
      python_39: true,
      python_310: true,
      python_311: true,
+     python_312: true,
      lxml: true,
      pillow: true,
   }
