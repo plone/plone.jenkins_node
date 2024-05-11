@@ -25,4 +25,3 @@ dependencies:
      lxml: true,
      pillow: true,
   }
-  - geerlingguy.munin-node
