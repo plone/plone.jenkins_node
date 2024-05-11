@@ -1,11 +1,10 @@
 ---
+- name: Restart fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: restarted
 
-- name: "restart fail2ban"
-  service:
-    name=fail2ban
-    state=restarted
-
-- name: "restart unattended-upgrades"
-  service:
-    name=unattended-upgrades
-    state=restarted
+- name: Restart unattended-upgrades
+  ansible.builtin.service:
+    name: unattended-upgrades
+    state: restarted

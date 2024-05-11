@@ -1,26 +1,28 @@
 ---
 # Install/configure everything related to jMeter
 
-- name: "jMeter: create folder"
-  file:
+- name: "JMeter: create folder"
+  ansible.builtin.file:
     path: /opt/jmeter
     state: directory
     owner: jenkins
     group: jenkins
+    mode: "0640"
 
-- name: "jMeter: download and install"
-  unarchive:
+- name: "JMeter: download and install"
+  ansible.builtin.unarchive:
     src: https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-3.3.tgz
     extra_opts: [--strip-components=1]
     remote_src: true
     dest: /opt/jmeter
     owner: jenkins
 
-- name: "jMeter: create bin"
+- name: "JMeter: create bin"
   become: true
-  file:
+  ansible.builtin.file:
     src: /opt/jmeter/bin/jmeter
     dest: /usr/local/bin/jmeter
     owner: jenkins
     group: jenkins
     state: link
+    mode: "0770"

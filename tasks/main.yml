@@ -1,12 +1,12 @@
 ---
-# update and configure the system
-- include: system.yml
+- name: Update and configure the system
+  ansible.builtin.import_tasks: system.yml
 
-# Configure Jenkins user
-- include: user.yml
+- name: Configure Jenkins user
+  ansible.builtin.import_tasks: user.yml
 
-# Browsers (firefox, et al)
-- include: browsers.yml
+- name: Browsers (firefox, et al)
+  ansible.builtin.import_tasks: browsers.yml
 
-# jMeter
-- include: jmeter.yml
+- name: Install jMeter
+  ansible.builtin.import_tasks: jmeter.yml

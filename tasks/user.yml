@@ -1,43 +1,46 @@
 ---
 - name: "User: add jenkins user"
   become: true
-  user:
+  ansible.builtin.user:
     name: jenkins
     shell: /bin/bash
 
 - name: "User: install authorized key"
   become: true
   become_user: jenkins
-  authorized_key:
+  ansible.posix.authorized_key:
     user: jenkins
-    key: "{{gh_raw}}/{{gh_jenkins_repo}}/master/files/jenkins.plone.org.pub"
+    key: "{{ gh_raw }}/{{ gh_jenkins_repo }}/master/files/jenkins.plone.org.pub"
 
 - name: "User: git config"
   become: true
   become_user: jenkins
-  copy:
+  ansible.builtin.copy:
     src: gitconfig
     dest: /home/jenkins/.gitconfig
     owner: jenkins
     group: jenkins
+    mode: "0600"
 
 - name: "User: create .buildout main folder"
   become: true
   become_user: jenkins
-  file:
+  ansible.builtin.file:
     path: /home/jenkins/.buildout
     state: directory
     owner: jenkins
     group: jenkins
+    mode: "0640"
 
 - name: "User: create .buildout subfolders"
   become: true
   become_user: jenkins
-  file:
+  ansible.builtin.file:
     path: /home/jenkins/.buildout/{{ item }}
     state: directory
     owner: jenkins
     group: jenkins
+    mode: "0640"
   with_items:
     - eggs
     - downloads
@@ -47,8 +50,9 @@
 - name: "User: add default.cfg buildout config file"
   become: true
   become_user: jenkins
-  copy:
+  ansible.builtin.copy:
     src: default.cfg
     dest: /home/jenkins/.buildout/default.cfg
     owner: jenkins
     group: jenkins
+    mode: "0600"

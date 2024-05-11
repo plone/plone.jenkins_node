@@ -1,24 +1,28 @@
 ---
 - name: "Browsers: Firefox: check installed version"
-  shell: dpkg -s firefox-mozilla-build | grep "^Version" | cut -d" " -f2
+  ansible.builtin.shell: |
+    dpkg -s firefox-mozilla-build | grep "^Version" | cut -d" " -f2
   register: firefox_installed_version
   ignore_errors: true
+  changed_when: firefox_installed_version.rc != 0
 
 - name: "Browsers: Firefox: check if it is installed"
-  shell: dpkg -s firefox-mozilla-build | grep "^Status" | cut -d" " -f2
+  ansible.builtin.shell: |
+    dpkg -s firefox-mozilla-build | grep "^Status" | cut -d" " -f2
   register: firefox_is_installed
   ignore_errors: true
+  changed_when: firefox_is_installed.rc != 0
 
 # Firefox
 - name: "Browsers: Firefox: remove stock version from distro"
   become: true
-  apt:
+  ansible.builtin.apt:
     name: firefox
     state: absent
 
 - name: "Browsers: Firefox: remove custom version"
   become: true
-  apt:
+  ansible.builtin.apt:
     name: firefox-mozilla-build
     state: absent
   when: >
@@ -26,7 +30,7 @@
     firefox_installed_version.stdout != firefox_version
 
 - name: "Browsers: Firefox: enable source repository"
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: |
       deb-src http://us.archive.ubuntu.com/ubuntu/
       {{ ansible_distribution_release }} main restricted
@@ -34,24 +38,25 @@
   when: firefox_is_installed.stdout != 'install'
 
 - name: "Browsers: Firefox: install system dependencies"
-  apt:
+  ansible.builtin.apt:
     pkg: firefox
     state: build-dep
   when: firefox_is_installed.stdout != 'install'
 
 - name: "Browsers: Firefox: download"
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ firefox_url }}"
     dest: /tmp
-    checksum: "sha512:{{ firefox_checksum }}"
+    checksum: sha512:{{ firefox_checksum }}
+    mode: "0600"
   when: >
     firefox_is_installed.stdout != 'install' or
     firefox_installed_version.stdout != firefox_version
 
 - name: "Browsers: Firefox: install"
   become: true
-  apt:
-    deb: "/tmp/{{ firefox_file_name }}"
+  ansible.builtin.apt:
+    deb: /tmp/{{ firefox_file_name }}
   when: >
     firefox_is_installed.stdout != 'install' or
     firefox_installed_version.stdout != firefox_version

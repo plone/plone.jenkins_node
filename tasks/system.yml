@@ -1,13 +1,13 @@
 ---
 - name: "System: update"
   become: true
-  apt:
+  ansible.builtin.apt:
     upgrade: dist
     update_cache: true
 
 - name: "System: install dependencies"
   become: true
-  apt:
+  ansible.builtin.apt:
     state: present
     name:
       # Java is needed in order to connect the Jenkins slaves to the master
@@ -44,7 +44,7 @@
       - unattended-upgrades
 
 - name: Install npm package dependencies (globally)
-  npm:
+  community.general.npm:
     name: "{{ item }}"
     global: true
     state: present
@@ -60,58 +60,58 @@
 # https://github.com/plone/Products.CMFPlone/blob/master/Products/CMFPlone/tests/testUnicodeSplitter.py
 - name: "System: install locale"
   become: true
-  locale_gen:
+  community.general.locale_gen:
     name: en_US.ISO-8859-15
     state: present
 
 - name: "System: set environment variables"
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/environment
     line: "{{ item }}"
   with_items:
-    - "LC_ALL=en_US.UTF-8"
-    - "LANG=en_US.UTF-8"
+    - LC_ALL=en_US.UTF-8
+    - LANG=en_US.UTF-8
 
 # Set Timezone to US/Pacific (default was: 'Etc/UTC')
 # XXX: Only a single test requires this in plone.app.form 2.2.x
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
 - name: "System: set timezone to US/Pacific"
   become: true
-  timezone:
+  community.general.timezone:
     name: US/Pacific
 
 # UFW
 - name: "System: set UFW to deny all"
   become: true
-  ufw:
+  community.general.ufw:
     state: enabled
     policy: deny
     direction: incoming
 
 - name: "System: set UFW to allow OpenSSH"
   become: true
-  ufw:
+  community.general.ufw:
     rule: allow
     name: OpenSSH
 
 - name: "System: set UFW to allow Port 80"
   become: true
-  ufw:
+  community.general.ufw:
     rule: allow
     port: 80
     proto: tcp
 
 - name: "System: set UFW to allow Port 443"
   become: true
-  ufw:
+  community.general.ufw:
     rule: allow
     port: 443
     proto: tcp
 
 - name: "System: set UFW to allow port 4949 from munin master"
   become: true
-  ufw:
+  community.general.ufw:
     rule: allow
     src: 162.209.104.107
     proto: tcp
@@ -120,36 +120,36 @@
 # fail2ban
 - name: "System: upload fail2ban jail.local"
   become: true
-  copy:
+  ansible.builtin.copy:
     src: jail.local
     dest: /etc/fail2ban/jail.local
-    mode: 0644
+    mode: "0644"
   notify: restart fail2ban
 
 # unattended-upgrades
 - name: "System: configure unattended-upgrades"
   become: true
-  copy:
+  ansible.builtin.copy:
     src: 10periodic
     dest: /etc/apt/apt.conf.d/10periodic
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: "System: upload unattended-upgrades configuration"
   become: true
-  copy:
+  ansible.builtin.copy:
     src: 50unattended-upgrades
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart unattended-upgrades
 
 # tmpreaper
 - name: "System: configure tmpreaper"
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/tmpreaper.conf
     regexp: "^TMPREAPER_TIME:"
     line: TMPREAPER_TIME=24
