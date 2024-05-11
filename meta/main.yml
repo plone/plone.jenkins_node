@@ -6,7 +6,7 @@ galaxy_info:
   role_name: jenkins_node
   namespace: plone
   license: license (GPLv2, CC-BY, etc)
-  min_ansible_version: 1.7.2
+  min_ansible_version: "2.2"
   platforms:
     - name: Ubuntu
       versions:
