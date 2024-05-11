@@ -3,6 +3,8 @@ galaxy_info:
   author: Plone Foundation
   description: Jenkins CI Node
   company: Plone Foundation
+  role_name: jenkins_node
+  namespace: plone
   license: license (GPLv2, CC-BY, etc)
   min_ansible_version: 1.7.2
   platforms:
