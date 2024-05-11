@@ -9,14 +9,14 @@
 
 # PhantomJS
 - name: "Browsers: PhantomJS: install"
-  become: yes
+  become: true
   apt:
     name: phantomjs
     state: present
 
 # Chrome
 - name: "Browsers: Chromium: install"
-  become: yes
+  become: true
   apt:
     name: ['chromium-browser', 'chromium-chromedriver']
     state: present

@@ -1,24 +1,23 @@
 ---
-
 - name: "Browsers: Firefox: check installed version"
   shell: dpkg -s firefox-mozilla-build | grep "^Version" | cut -d" " -f2
   register: firefox_installed_version
-  ignore_errors: True
+  ignore_errors: true
 
 - name: "Browsers: Firefox: check if it is installed"
   shell: dpkg -s firefox-mozilla-build | grep "^Status" | cut -d" " -f2
   register: firefox_is_installed
-  ignore_errors: True
+  ignore_errors: true
 
 # Firefox
 - name: "Browsers: Firefox: remove stock version from distro"
-  become: yes
+  become: true
   apt:
     name: firefox
     state: absent
 
 - name: "Browsers: Firefox: remove custom version"
-  become: yes
+  become: true
   apt:
     name: firefox-mozilla-build
     state: absent
@@ -44,7 +43,7 @@
   when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != firefox_version
 
 - name: "Browsers: Firefox: install"
-  become: yes
+  become: true
   apt:
     deb: "/tmp/{{ firefox_file_name }}"
   when: firefox_is_installed.stdout != 'install' or firefox_installed_version.stdout != firefox_version

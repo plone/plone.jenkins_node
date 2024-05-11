@@ -1,20 +1,19 @@
 ---
-
 - name: "User: add jenkins user"
-  become: yes
+  become: true
   user:
     name: jenkins
     shell: /bin/bash
 
 - name: "User: install authorized key"
-  become: yes
+  become: true
   become_user: jenkins
   authorized_key:
     user: jenkins
     key: https://raw.githubusercontent.com/plone/jenkins.plone.org/master/files/jenkins.plone.org.pub
 
 - name: "User: git config"
-  become: yes
+  become: true
   become_user: jenkins
   copy:
     src: gitconfig
@@ -23,7 +22,7 @@
     group: jenkins
 
 - name: "User: create .buildout main folder"
-  become: yes
+  become: true
   become_user: jenkins
   file:
     path: /home/jenkins/.buildout
@@ -32,7 +31,7 @@
     group: jenkins
 
 - name: "User: create .buildout subfolders"
-  become: yes
+  become: true
   become_user: jenkins
   file:
     path: /home/jenkins/.buildout/{{ item }}
@@ -46,7 +45,7 @@
     - cache
 
 - name: "User: add default.cfg buildout config file"
-  become: yes
+  become: true
   become_user: jenkins
   copy:
     src: default.cfg

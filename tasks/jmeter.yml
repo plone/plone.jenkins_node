@@ -12,12 +12,12 @@
   unarchive:
     src: https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-3.3.tgz
     extra_opts: [--strip-components=1]
-    remote_src: yes
+    remote_src: true
     dest: /opt/jmeter
     owner: jenkins
 
 - name: "jMeter: create bin"
-  become: yes
+  become: true
   file:
     src: /opt/jmeter/bin/jmeter
     dest: /usr/local/bin/jmeter

@@ -1,10 +1,9 @@
 ---
-
 - name: "Browsers: geckodriver | Check if geckodriver is installed"
   become: true
   shell: geckodriver --version | head -n1 | cut -d" " -f2
   register: already_installed
-  ignore_errors: True
+  ignore_errors: true
 
 - name: "Browsers: geckodriver: Download"
   get_url:
@@ -17,5 +16,5 @@
   unarchive:
     src: /tmp/{{ geckodriver_file_name }}
     dest: /usr/local/bin/
-    copy: no
+    copy: false
   when: already_installed.stdout != geckodriver_version
