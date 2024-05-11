@@ -10,7 +10,7 @@
   become_user: jenkins
   authorized_key:
     user: jenkins
-    key: https://raw.githubusercontent.com/plone/jenkins.plone.org/master/files/jenkins.plone.org.pub
+    key: "{{gh_raw}}/{{gh_jenkins_repo}}/master/files/jenkins.plone.org.pub"
 
 - name: "User: git config"
   become: true
