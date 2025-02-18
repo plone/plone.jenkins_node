@@ -79,7 +79,7 @@
 - name: "System: set timezone to US/Pacific"
   become: true
   community.general.timezone:
-    name: US/Pacific
+    name: Etc/GMT-9
 
 # UFW
 - name: "System: set UFW to deny all"
@@ -124,7 +124,7 @@
     src: jail.local
     dest: /etc/fail2ban/jail.local
     mode: "0644"
-  notify: restart fail2ban
+  notify: Restart fail2ban
 
 # unattended-upgrades
 - name: "System: configure unattended-upgrades"
@@ -144,7 +144,7 @@
     owner: root
     group: root
     mode: "0644"
-  notify: restart unattended-upgrades
+  notify: Restart unattended-upgrades
 
 # tmpreaper
 - name: "System: configure tmpreaper"

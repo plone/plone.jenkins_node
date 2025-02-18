@@ -7,11 +7,11 @@
 - name: Install geckodriver
   ansible.builtin.import_tasks: geckodriver.yml
 
-- name: "Browsers: PhantomJS: install"
-  become: true
-  ansible.builtin.apt:
-    name: phantomjs
-    state: present
+# - name: "Browsers: PhantomJS: install"
+#   become: true
+#   ansible.builtin.apt:
+#     name: phantomjs
+#     state: present
 
 - name: "Browsers: Chromium: install"
   become: true
