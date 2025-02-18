@@ -11,7 +11,7 @@
     state: present
     name:
       # Java is needed in order to connect the Jenkins slaves to the master
-      - openjdk-8-jre
+      - openjdk-21-jre
       # Basics
       - build-essential
       - htop
