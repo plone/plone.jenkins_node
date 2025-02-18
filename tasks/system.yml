@@ -39,6 +39,7 @@
       # Others / system
       - libyaml-dev
       - imagemagick
+      - npm
       - ufw
       - fail2ban
       - unattended-upgrades
