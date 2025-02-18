@@ -1,11 +1,11 @@
 ---
 # Install/configure everything related to web browsers
 
-- name: Install Firefox
-  ansible.builtin.import_tasks: firefox.yml
+# - name: Install Firefox
+#   ansible.builtin.import_tasks: firefox.yml
 
-- name: Install geckodriver
-  ansible.builtin.import_tasks: geckodriver.yml
+# - name: Install geckodriver
+#   ansible.builtin.import_tasks: geckodriver.yml
 
 # - name: "Browsers: PhantomJS: install"
 #   become: true
