@@ -89,10 +89,10 @@
 # Set Timezone to US/Pacific (default was: 'Etc/UTC')
 # XXX: Only a single test requires this in plone.app.form 2.2.x
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
-- name: "System: set timezone to US/Pacific"
+- name: "System: set timezone to UTC"
   become: true
   community.general.timezone:
-    name: Etc/GMT-9
+    name: Etc/UTC
 
 # UFW
 - name: "System: set UFW to deny all"
