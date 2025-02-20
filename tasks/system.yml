@@ -12,6 +12,7 @@
     name:
       # Java is needed in order to connect the Jenkins slaves to the master
       - openjdk-21-jre
+      - acl
       # Basics
       - build-essential
       - htop
