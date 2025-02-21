@@ -16,8 +16,6 @@ galaxy_info:
 
 dependencies:
   - role: gforcada.compile_python
-    python_27: true
-    python_38: true
     python_39: true
     python_310: true
     python_311: true

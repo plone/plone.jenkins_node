@@ -12,6 +12,7 @@
     name:
       # Java is needed in order to connect the Jenkins slaves to the master
       - openjdk-21-jre
+      - acl
       # Basics
       - build-essential
       - htop
@@ -57,6 +58,7 @@
       - gstreamer1.0-libav
 
 - name: Install npm package dependencies (globally)
+  become: true
   community.general.npm:
     name: "{{ item }}"
     global: true
