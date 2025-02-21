@@ -11,7 +11,7 @@
     state: present
     name:
       # Java is needed in order to connect the Jenkins slaves to the master
-      - openjdk-8-jre
+      - openjdk-21-jre
       # Basics
       - build-essential
       - htop
@@ -39,9 +39,22 @@
       # Others / system
       - libyaml-dev
       - imagemagick
+      - npm
       - ufw
       - fail2ban
       - unattended-upgrades
+      # Playwright dependencies
+      - libwoff1
+      - libvpx-dev
+      - libevent-dev
+      - libgstreamer1.0-dev
+      - libharfbuzz-dev
+      - libenchant-2-2
+      - libsecret-1-0
+      - libhyphen0
+      - libmanette-0.2-0
+      - libflite1
+      - gstreamer1.0-libav
 
 - name: Install npm package dependencies (globally)
   community.general.npm:
@@ -76,10 +89,10 @@
 # Set Timezone to US/Pacific (default was: 'Etc/UTC')
 # XXX: Only a single test requires this in plone.app.form 2.2.x
 # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
-- name: "System: set timezone to US/Pacific"
+- name: "System: set timezone to UTC"
   become: true
   community.general.timezone:
-    name: US/Pacific
+    name: Etc/UTC
 
 # UFW
 - name: "System: set UFW to deny all"
@@ -124,7 +137,7 @@
     src: jail.local
     dest: /etc/fail2ban/jail.local
     mode: "0644"
-  notify: restart fail2ban
+  notify: Restart fail2ban
 
 # unattended-upgrades
 - name: "System: configure unattended-upgrades"
@@ -144,7 +157,7 @@
     owner: root
     group: root
     mode: "0644"
-  notify: restart unattended-upgrades
+  notify: Restart unattended-upgrades
 
 # tmpreaper
 - name: "System: configure tmpreaper"

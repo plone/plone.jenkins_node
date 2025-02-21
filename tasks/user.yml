@@ -30,7 +30,7 @@
     state: directory
     owner: jenkins
     group: jenkins
-    mode: "0640"
+    mode: "0750"
 
 - name: "User: create .buildout subfolders"
   become: true
@@ -40,7 +40,7 @@
     state: directory
     owner: jenkins
     group: jenkins
-    mode: "0640"
+    mode: "0750"
   with_items:
     - eggs
     - downloads
