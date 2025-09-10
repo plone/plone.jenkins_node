@@ -61,14 +61,8 @@ Now you can run the playbook:
     ansible-playbook -i inventory.yml --check ansible.yml
 
 This does not make any changes yet, but may be a good initial test.
-You may get an error like this:
 
-    No package matching 'quilt' is available
-
-You may need to look for this package in the `ansible-compile-python` checkout and remove it, and try again, then we see if it is needed after all.
-Pending PR to fix that: https://github.com/gforcada/ansible-compile-python/pull/27
-
-Then it may give an error like this:
+After a while it may give an error like this:
 
     Source '/tmp/py3.9.23.tar.xz' does not exist
 
