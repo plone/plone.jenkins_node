@@ -21,5 +21,6 @@ dependencies:
     python_311: true
     python_312: true
     python_313: true
+    python_314: true
     lxml: true
     pillow: true
