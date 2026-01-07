@@ -73,6 +73,11 @@ That just means that the `--check` option has lost its usefulness, so we run the
 This can take a long time, with sometimes nothing being reported.
 Have patience.
 
+If you need to login with a different remote user, use the `-u` parameter:
+
+    ansible-playbook -i inventory.yml -u <remoteuser> ansible.yml
+
+
 Manual steps
 ------------
 
