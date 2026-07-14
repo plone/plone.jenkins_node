@@ -2,8 +2,14 @@
 - name: Update and configure the system
   ansible.builtin.import_tasks: system.yml
 
+- name: Install Python interpreters
+  ansible.builtin.import_tasks: python.yml
+
 - name: Configure Jenkins user
   ansible.builtin.import_tasks: user.yml
+
+- name: Install nvm and node for the jenkins user
+  ansible.builtin.import_tasks: nvm.yml
 
 - name: Browsers (firefox, et al)
   ansible.builtin.import_tasks: browsers.yml

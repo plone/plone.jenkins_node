@@ -8,13 +8,25 @@ None.
 
 Role variables
 --------------
-None.
+* `python_versions`: list of Python versions to install with `uv` (default: 3.9 through 3.14).
+  Each version ends up as `/srv/pythonX.Y/bin/python3`.
+* `uv_python_install_dir`: where `uv` stores the interpreters (default: `/srv/uv`).
+* `nvm_version`: version of [nvm](https://github.com/nvm-sh/nvm) to install for the jenkins user (default: `0.40.3`).
+* `nvm_node_version`: node version that gets installed and set as default via nvm (default: `22`).
 
 Example playbook
 ----------------
     - hosts: node5.jenkins.plone.org
       roles:
          - { role: plone.jenkins_node }
+
+The role variables can be overridden in the playbook.
+For example to install a different node version:
+
+    - hosts: node5.jenkins.plone.org
+      roles:
+        - role: plone.jenkins_node
+          nvm_node_version: "24"
 
 Server playbook
 ---------------
@@ -29,21 +41,13 @@ Make a checkout of the repo and go to this directory.
 **Do not give a different name to the directory**:
 it must be called `plone.jenkins_node` otherwise some stuff (roles) cannot be found.
 
-Install the `ansible-galaxy` command.
+Install the `ansible` command.
 For example on Mac:
 
     brew install ansible
 
-You need to explicitly install some required galaxy roles (packages):
-
-    ansible-galaxy install -r roles.yml
-
-Currently this installs [`gforcada/ansible-compile-python`](https://github.com/gforcada/ansible-compile-python).
-We will want to switch to installing Pythons with `uv`, but for now this gets the job done.
-
-Please take a note of where this role gets installed.
-In my case it was in the parent directory.
-If you need to fix anything in the role, that is where you can edit things.
+The Python interpreters are installed with [`uv`](https://docs.astral.sh/uv/)
+(pre-built binaries, nothing gets compiled), so no extra galaxy roles are needed.
 
 Create an `inventory.yml` mentioning your host:
 
@@ -54,6 +58,8 @@ nodes:
 ```
 
 Change `ansible.yml` to refer to your host instead of `localhost`.
+Here you can also override role variables like `nvm_node_version`
+(see the example playbook above).
 It may be better to put `inventory.yml` and `ansible.yml` in a different directory that is not in this repo, or not under source control.
 
 Now you can run the playbook:
@@ -62,11 +68,10 @@ Now you can run the playbook:
 
 This does not make any changes yet, but may be a good initial test.
 
-After a while it may give an error like this:
-
-    Source '/tmp/py3.9.23.tar.xz' does not exist
-
-That just means that the `--check` option has lost its usefulness, so we run the command for real:
+Some tasks depend on the changes of earlier tasks (for example the Python
+symlinks need the interpreters that uv installs), so at some point `--check`
+gives an error and has lost its usefulness.
+Then we run the command for real:
 
     ansible-playbook -i inventory.yml ansible.yml
 
@@ -94,21 +99,14 @@ swapon /swapfile1
 echo "/swapfile1 none swap sw 0 0" >> /etc/fstab
 ```
 
-Also, we need newer node/npm versions to run robotframework tests.
-This should go in to ansible, but for now we will use nvm.
-Check https://github.com/nvm-sh/nvm for the latest nvm version.
+We need newer node/npm versions to run robotframework tests.
+The playbook installs nvm for the jenkins user and sets a default
+node version (see the `nvm_version` and `nvm_node_version` role
+variables). You can check it like this:
 
 ```
 sudo su -l jenkins
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-```
-
-Close and reopen the terminal so nvm is fully available.
-Then install newer versions, again as user jenkins:
-
-```
-nvm install --lts && nvm use --lts
-node --version; npm --version; yarn --version
+node --version; npm --version
 ```
 
 You should have as minimum node version 22.

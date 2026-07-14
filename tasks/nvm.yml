@@ -1,0 +1,28 @@
+---
+# Install nvm for the jenkins user and set a default node version.
+# The robotframework tests need a newer node than the distribution
+# provides.
+
+- name: "Nvm: install for jenkins user"
+  become: true
+  become_user: jenkins
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl -o- {{ gh_raw }}/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash
+  args:
+    creates: /home/jenkins/.nvm/nvm.sh
+    executable: /bin/bash
+
+- name: "Nvm: install node and make it the default version"
+  become: true
+  become_user: jenkins
+  ansible.builtin.shell: |
+    source /home/jenkins/.nvm/nvm.sh
+    nvm install {{ nvm_node_version }}
+    nvm use {{ nvm_node_version }}
+    nvm alias default {{ nvm_node_version }}
+  args:
+    executable: /bin/bash
+  register: nvm_node
+  changed_when: >
+    'is already installed' not in (nvm_node.stdout + nvm_node.stderr)

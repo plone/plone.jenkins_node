@@ -37,6 +37,16 @@
       - xfonts-75dpi
       - xfonts-scalable
       - xfonts-cyrillic
+      # lxml build dependencies (for when no wheel is available)
+      - libxml2-dev
+      - libxslt1-dev
+      # Pillow build dependencies (for when no wheel is available)
+      - libjpeg-dev
+      - libfreetype-dev
+      - libtiff-dev
+      - liblcms2-dev
+      - libwebp-dev
+      - zlib1g-dev
       # Others / system
       - libyaml-dev
       - imagemagick

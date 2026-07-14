@@ -43,7 +43,6 @@ jobs:
 
       - name: Lint code.
         run: |
-          ansible-galaxy install -r roles.yml
           ansible-playbook --syntax-check ansible.yml
 
   ansible-lint:

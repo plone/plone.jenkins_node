@@ -1,0 +1,43 @@
+---
+# Install Python interpreters with uv (pre-built python-build-standalone
+# binaries, nothing gets compiled). The /srv/pythonX.Y symlinks keep the
+# layout that the Jenkins job scripts expect, e.g.
+# /srv/python3.13/bin/python3.
+
+- name: "Python: install uv"
+  become: true
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl -LsSf https://astral.sh/uv/install.sh |
+      env UV_INSTALL_DIR=/usr/local/bin INSTALLER_NO_MODIFY_PATH=1 sh
+  args:
+    creates: /usr/local/bin/uv
+    executable: /bin/bash
+
+- name: "Python: install interpreters"
+  become: true
+  ansible.builtin.command: uv python install {{ item }}
+  environment:
+    UV_PYTHON_INSTALL_DIR: "{{ uv_python_install_dir }}"
+  register: uv_install
+  changed_when: "'Installed Python' in uv_install.stderr"
+  with_items: "{{ python_versions }}"
+
+- name: "Python: find interpreter paths"
+  become: true
+  ansible.builtin.command: uv python find --managed-python {{ item }}
+  environment:
+    UV_PYTHON_INSTALL_DIR: "{{ uv_python_install_dir }}"
+  register: uv_find
+  changed_when: false
+  with_items: "{{ python_versions }}"
+
+- name: "Python: create /srv/pythonX.Y symlinks"
+  become: true
+  ansible.builtin.file:
+    src: "{{ item.stdout | dirname | dirname }}"
+    dest: /srv/python{{ item.item }}
+    state: link
+  with_items: "{{ uv_find.results }}"
+  loop_control:
+    label: "/srv/python{{ item.item }}"
