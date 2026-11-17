@@ -8,13 +8,14 @@ None.
 
 Role variables
 --------------
-* `python_versions`: list of Python versions to install with `uv` (default: 3.9 through 3.14).
+* `python_versions`: list of Python versions to install with `uv` (default: 3.9 through 3.15).
   Each version ends up as `/srv/pythonX.Y/bin/python3`.
 * `uv_python_install_dir`: where `uv` stores the interpreters (default: `/srv/uv`).
 * `uv_update`: on each run, update `uv` itself (`uv self update`) and upgrade the
   installed Python versions to their latest patch or pre-release
   (`uv python install --upgrade`) (default: `true`).
-  The `/srv/pythonX.Y` symlinks then point to the new version.
+  If `uv self update` fails, the play shows a warning and continues with the installed `uv`.
+  See [Python upgrades](#python-upgrades) below.
 * `nvm_version`: version of [nvm](https://github.com/nvm-sh/nvm) to install for the jenkins user (default: `0.40.3`).
 * `nvm_node_version`: node version that gets installed and set as default via nvm (default: `22`).
 
@@ -85,6 +86,27 @@ Have patience.
 If you need to login with a different remote user, use the `-u` parameter:
 
     ansible-playbook -i inventory.yml -u <remoteuser> ansible.yml
+
+Python upgrades
+---------------
+
+With `uv_update` enabled (the default), every playbook run may upgrade
+the Python interpreters, even a run that you only meant for other tasks.
+Jobs that are running at that moment may then see their interpreter change.
+So take the node offline in Jenkins before running the playbook,
+or set `uv_update: false` in your playbook.
+
+`/srv/pythonX.Y` points to the minor version link that `uv` maintains,
+for example `/srv/uv/cpython-3.15-linux-x86_64-gnu`.
+On an upgrade, `uv` moves that link to the new patch version directory.
+So `/srv/pythonX.Y` itself does not change, and existing virtualenvs
+automatically use the new patch version.
+
+The old patch version directories in `/srv/uv` are kept.
+You can use them to roll back, by pointing the minor version link back
+at the old directory with `ln -sfn`.
+But they are never removed, so `/srv/uv` grows with each patch release.
+To clean up, remove the old directories by hand.
 
 
 Manual steps

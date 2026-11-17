@@ -16,19 +16,35 @@
 
 # The previous task only installs uv when it is missing, so update it here.
 # A recent uv is needed to know about the latest Python releases.
+# This can fail, for example when uv was not installed with the standalone
+# installer (no receipt) or when the GitHub API rate limit is hit.
+# That should not stop the rest of the play, so we only warn.
 - name: "Python: update uv"
   become: true
   ansible.builtin.command: uv self update
   register: uv_self_update
   changed_when: "'Upgraded uv' in uv_self_update.stderr"
+  failed_when: false
   when: uv_update | bool
+
+- name: "Python: warn when uv could not be updated"
+  ansible.builtin.debug:
+    msg: >-
+      WARNING: 'uv self update' failed, continuing with the installed uv:
+      {{ uv_self_update.stderr }}
+  when:
+    - uv_update | bool
+    - uv_self_update.rc != 0
 
 # With --upgrade, an already installed X.Y gets upgraded to the latest
 # patch (or pre-release) version that uv knows about.
 - name: "Python: install interpreters"
   become: true
-  ansible.builtin.command: >-
-    uv python install {{ '--upgrade' if uv_update | bool else '' }} {{ item }}
+  ansible.builtin.command:
+    argv: >-
+      {{ ['uv', 'python', 'install']
+         + (['--upgrade'] if uv_update | bool else [])
+         + [item] }}
   environment:
     UV_PYTHON_INSTALL_DIR: "{{ uv_python_install_dir }}"
   register: uv_install
