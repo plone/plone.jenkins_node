@@ -14,9 +14,21 @@
     creates: /usr/local/bin/uv
     executable: /bin/bash
 
+# The previous task only installs uv when it is missing, so update it here.
+# A recent uv is needed to know about the latest Python releases.
+- name: "Python: update uv"
+  become: true
+  ansible.builtin.command: uv self update
+  register: uv_self_update
+  changed_when: "'Upgraded uv' in uv_self_update.stderr"
+  when: uv_update | bool
+
+# With --upgrade, an already installed X.Y gets upgraded to the latest
+# patch (or pre-release) version that uv knows about.
 - name: "Python: install interpreters"
   become: true
-  ansible.builtin.command: uv python install {{ item }}
+  ansible.builtin.command: >-
+    uv python install {{ '--upgrade' if uv_update | bool else '' }} {{ item }}
   environment:
     UV_PYTHON_INSTALL_DIR: "{{ uv_python_install_dir }}"
   register: uv_install

@@ -11,6 +11,10 @@ Role variables
 * `python_versions`: list of Python versions to install with `uv` (default: 3.9 through 3.14).
   Each version ends up as `/srv/pythonX.Y/bin/python3`.
 * `uv_python_install_dir`: where `uv` stores the interpreters (default: `/srv/uv`).
+* `uv_update`: on each run, update `uv` itself (`uv self update`) and upgrade the
+  installed Python versions to their latest patch or pre-release
+  (`uv python install --upgrade`) (default: `true`).
+  The `/srv/pythonX.Y` symlinks then point to the new version.
 * `nvm_version`: version of [nvm](https://github.com/nvm-sh/nvm) to install for the jenkins user (default: `0.40.3`).
 * `nvm_node_version`: node version that gets installed and set as default via nvm (default: `22`).
 

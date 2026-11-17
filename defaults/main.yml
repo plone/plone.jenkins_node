@@ -9,6 +9,9 @@ python_versions:
   - "3.14"
   - "3.15"
 uv_python_install_dir: /srv/uv
+# Update uv itself and upgrade the installed Python versions to the
+# latest patch release on each run.
+uv_update: true
 
 # Version of nvm itself, see https://github.com/nvm-sh/nvm/releases
 nvm_version: 0.40.3
