@@ -1,4 +1,5 @@
 ---
-- hosts: localhost
+- name: Provision Jenkins node
+  hosts: localhost
   roles:
     - plone.jenkins_node

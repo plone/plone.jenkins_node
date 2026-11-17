@@ -17,7 +17,8 @@ jobs:
       - name: Set up Python 3.
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          # Not "3.x": ansible-core does not import on Python 3.15 yet.
+          python-version: "3.14"
 
       - name: Install test dependencies.
         run: pip3 install yamllint
@@ -36,7 +37,8 @@ jobs:
       - name: Set up Python 3.
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          # Not "3.x": ansible-core does not import on Python 3.15 yet.
+          python-version: "3.14"
 
       - name: Install test dependencies.
         run: pip3 install ansible
@@ -55,10 +57,11 @@ jobs:
       - name: Set up Python 3.
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          # Not "3.x": ansible-core does not import on Python 3.15 yet.
+          python-version: "3.14"
 
       - name: Install test dependencies.
-        run: pip3 install ansible-lint
+        run: pip3 install ansible ansible-lint
 
       - name: Lint code.
         run: |
